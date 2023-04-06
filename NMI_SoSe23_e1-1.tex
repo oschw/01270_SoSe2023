@@ -1,0 +1,356 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{fancyhdr}
+\usepackage[ngerman,german]{babel}
+\usepackage{german}
+\usepackage[utf8]{inputenc}
+\usepackage[active]{srcltx}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{struktex}
+\usepackage{hyperref}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{geometry}
+\usepackage{calc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% EDIT THIS PART %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Fach}{01270 Numerische Mathematik I}
+\newcommand{\FachKurz}{NMI}
+\newcommand{\Name}{Oliver Schwarz}
+\newcommand{\Matrikelnummer}{6883389}
+\newcommand{\Semester}{SoSe 23}
+\newcommand{\Kurseinheit}{1}
+\newcommand{\AufgabeNummer}{1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DO NOT EDIT THIS PART %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Aufgabe}[1]{
+  {
+  \vspace*{0.5cm}
+  \textbf{Aufgabe #1}
+  \vspace*{0.2cm}
+  }
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PAGE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\parindent}{0em}
+\topmargin 0cm
+\oddsidemargin 0cm
+\evensidemargin 0cm
+
+\geometry{%
+  left=45.0mm,
+  right=15.0mm,
+  top=25mm,
+  bottom=25mm,
+  bindingoffset=0mm,
+  headheight=30pt,
+  includehead
+}
+
+\fancyheadoffset[L]{20mm}
+\renewcommand{\headrulewidth}{1pt}
+
+\pagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PDF SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hypersetup{
+    %pdftitle={\Fach{}: Übungsblatt \Uebungsblatt{}},
+    pdftitle={\Fach{}: Kurseinheit \Kurseinheit{}},
+    pdfauthor={\Name},
+    pdfborder={0 0 0}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% CODE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lstset{ %
+language=java,
+basicstyle=\footnotesize\tt,
+showtabs=false,
+tabsize=2,
+captionpos=b,
+breaklines=true,
+extendedchars=true,
+showstringspaces=false,
+flexiblecolumns=true,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}}
+\author{\Name{}}
+
+\begin{document}
+
+%\renewcommand{\theequation}{L\Kurseinheit{}.\AufgabeNummer{}.\arabic{equation}}
+\renewcommand{\theequation}{L \AufgabeNummer{}.\arabic{equation}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lhead{\sf \large \Fach{} \\ \small \Name{} - \Matrikelnummer{}}
+%\rhead{\sf \Semester{}}
+\rhead{\sf \FachKurz{} \quad E \Kurseinheit{}/\AufgabeNummer{}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% START HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Aufgabe{\AufgabeNummer{} \quad (Fehlerfortpflanzung)}
+
+Wir betrachten die bestimmten Integrale
+\begin{equation*}
+  I_n := \int\limits_{0}^{1} \frac{x^n}{x+a} \text{d}x, \qquad n \in \mathbb{N}_0,
+\end{equation*}
+für beliebiges, aber festes $a \in \mathbb{R}$ mit $a>1$.
+
+\begin{enumerate}[a)]
+\item % a)
+Für $n \in \mathbb{N}_0$ setzen wir
+\begin{align*}
+  I_n^> := \int\limits_{0}^{1} \frac{x^n}{0 + a} \text{d}x \geq \int\limits_{0}^{1} \frac{x^n}{x+a} \text{d}x = I_n, \quad \text{und} \\
+  I_n^< := \int\limits_{0}^{1} \frac{x^n}{1 + a} \text{d}x \leq \int\limits_{0}^{1} \frac{x^n}{x+a} \text{d}x = I_n
+\end{align*}
+da $\displaystyle\frac{x^n}{1 + a}\leq \displaystyle\frac{x^n}{x + a} \leq \displaystyle\frac{x^n}{0 + a}$ oder $(1+a) \geq (x+a) \geq a$ für $x \in [0, 1]$.
+
+
+Es folgt:
+\begin{align*}
+  I_n^> = \frac{1}{a} \int\limits_{0}^{1} x^n \text{d}x = \frac{1}{(n+1)a} x^{n+1} \bigg|_0^1 = \frac{1}{(n+1)a} =: M_n, \quad \text{und} \\
+  I_n^< = \frac{1}{(a+1)} \int\limits_{0}^{1} x^n \text{d}x = \frac{1}{(n+1)(a+1)} x^{n+1} \bigg|_0^1 = \frac{1}{(n+1)(a+1)} =: m_n.
+\end{align*}
+
+Also
+\begin{equation*}
+  m_n \leq I_n \leq M_n.
+\end{equation*}
+
+Da für $x \in [0, 1]$ und $n \in \mathbb{N}_0$ gilt: $x^n \geq x \cdot x^n$, also $x^n \geq x^{n+1}$, ist auch $I_n > I_{n+1}$.
+
+
+\item % b)
+Es ist
+\begin{align*}
+  I_0 &= \int\limits_{0}^{1} \frac{x^0}{x+a} \text{d}x = \int\limits_{0}^{1} \frac{1}{x+a} \text{d}x \\
+      &= \ln{(x + a)} \bigg|_0^1 = \ln{(1+a)} - \ln{a} \\
+  I_0 &= \ln{\frac{1+a}{a}}.
+\end{align*}
+
+Weiterhin gilt
+\begin{align*}
+  I_{n} + a I_{n-1} &= \int\limits_{0}^{1} \frac{x^n}{x+a} \text{d}x + a\int\limits_{0}^{1} \frac{x^{n-1}}{x+a} \text{d}x \\
+  &= \int\limits_{0}^{1} \frac{x^n + a x^{n-1}}{x+a} \text{d}x \\
+  &= \int\limits_{0}^{1} \frac{(x + a) x^{n-1}}{x+a} \text{d}x = \frac{1}{n}x^n \bigg|_0^1 \\
+  I_{n} + a I_{n-1} &= \frac{1}{n},
+\end{align*}
+was der Rekursion entspricht.
+
+\item % c)
+\qquad
+
+\begin{lstlisting}[language=Python, frame=single, numbers=left]
+#https://www.onlinegdb.com/online_python_compiler
+#https://onlinegdb.com/rkNhm70K4
+from math import log
+
+#Konstanten
+a = 10
+n_max = 20
+
+#untere Schranke
+m_n = lambda n: 1/((n+1)*(a+1))
+
+#obere Schranke
+M_n = lambda n: 1/((n+1)*a)
+
+#Rekursion
+def I_n(n):
+  if n > 0:
+    return (1/n) - a * I_n(n-1)
+  else:
+    return log((a+1)/a)
+
+#Ausgabe Bildschirm
+print(" n       m_n     \u2264      I_n     \u2264      M_n")
+print("----------------------------------------------")
+for i in range(n_max + 1):
+  print("{:2d}  {: .5e}   {: .5e}   {: .5e}".format(i, m_n(i), I_n(i), M_n(i)))
+\end{lstlisting}
+
+\begin{equation*}
+\begin{array}[t]{ c | c c c c c}
+n & m_n & \leq & I_n & \leq & M_n\\\hline
+ 0 & \mathtt{+9.09091e-02} &   & \mathtt{+9.53102e-02} &   & \mathtt{+1.00000e-01} \\
+ 1 & \mathtt{+4.54545e-02} &   & \mathtt{+4.68982e-02} &   & \mathtt{+5.00000e-02} \\
+ 2 & \mathtt{+3.03030e-02} &   & \mathtt{+3.10180e-02} &   & \mathtt{+3.33333e-02} \\
+ 3 & \mathtt{+2.27273e-02} &   & \mathtt{+2.31535e-02} &   & \mathtt{+2.50000e-02} \\
+ 4 & \mathtt{+1.81818e-02} &   & \mathtt{+1.84647e-02} &   & \mathtt{+2.00000e-02} \\
+ 5 & \mathtt{+1.51515e-02} &   & \mathtt{+1.53529e-02} &   & \mathtt{+1.66667e-02} \\
+ 6 & \mathtt{+1.29870e-02} &   & \mathtt{+1.31377e-02} &   & \mathtt{+1.42857e-02} \\
+ 7 & \mathtt{+1.13636e-02} &   & \mathtt{+1.14806e-02} &   & \mathtt{+1.25000e-02} \\
+ 8 & \mathtt{+1.01010e-02} &   & \mathtt{+1.01944e-02} &   & \mathtt{+1.11111e-02} \\
+ 9 & \mathtt{+9.09091e-03} &   & \mathtt{+9.16713e-03} &   & \mathtt{+1.00000e-02} \\
+10 & \mathtt{+8.26446e-03} &   & \mathtt{+8.32871e-03} &   & \mathtt{+9.09091e-03} \\
+11 & \mathtt{+7.57576e-03} &   & \mathtt{+7.62195e-03} &   & \mathtt{+8.33333e-03} \\
+12 & \mathtt{+6.99301e-03} &   & \mathtt{+7.11381e-03} &   & \mathtt{+7.69231e-03} \\
+13 & \mathtt{+6.49351e-03} &   & \mathtt{+5.78497e-03} &   & \mathtt{+7.14286e-03} \\
+14 & \mathtt{+6.06061e-03} &   & \mathtt{+1.35789e-02} &   & \mathtt{+6.66667e-03} \\
+15 & \mathtt{+5.68182e-03} &   & \mathtt{-6.91221e-02} &   & \mathtt{+6.25000e-03} \\
+16 & \mathtt{+5.34759e-03} &   & \mathtt{+7.53721e-01} &   & \mathtt{+5.88235e-03} \\
+17 & \mathtt{+5.05051e-03} &   & \mathtt{-7.47839e+00} &   & \mathtt{+5.55556e-03} \\
+18 & \mathtt{+4.78469e-03} &   & \mathtt{+7.48394e+01} &   & \mathtt{+5.26316e-03} \\
+19 & \mathtt{+4.54545e-03} &   & \mathtt{-7.48342e+02} &   & \mathtt{+5.00000e-03} \\
+20 & \mathtt{+4.32900e-03} &   & \mathtt{+7.48347e+03} &   & \mathtt{+4.76190e-03} \\
+\end{array}
+\end{equation*}
+
+\item % d)
+Wir betrachten für $n \in \mathbb{N}$ die Folge $\tilde{I}_n := \frac{1}{n}-a\tilde{I}_{n-1}$ mit dem gestörten Startwert $\tilde{I}_0 := I_0 + \Delta_{I_0}$ und bilden die Werte für $n = 1, 2, 3$:
+\begin{align*}
+    \tilde{I}_1 &=  \frac{1}{1} - a\tilde{I}_{0} = 1+(-a(I_0 + \Delta_{I_0})) \\
+                &= 1 - a I_0 - a \Delta_{I_0} \\
+    \tilde{I}_2 &= \frac{1}{2} - a\tilde{I}_{1} = \frac{1}{2} + (-a(1 - a I_0 - a \Delta_{I_0})) \\
+                &= \frac{1}{2} - a + a^2 I_0 + a^2 \Delta_{I_0} \\
+    \tilde{I}_3 &= \frac{1}{3} - a\tilde{I}_{2} = \frac{1}{3} + (-a(\frac{1}{2} - a + a^2 I_0 + a^2 \Delta_{I_0})) \\
+                &= \frac{1}{3} - \frac{a}{2} + a^2 - a^3 I_0 - a^3 \Delta_{I_0} \\
+%    \tilde{I}_4 &= \frac{1}{4} - a\tilde{I}_{3} = \frac{a^0}{4} + (-a(\frac{a^0}{3} - \frac{a^1}{2} + \frac{a^2}{1} - a^3 I_0 - a^3 \Delta_{I_0})) \\
+%                &= \frac{a^0}{4} - \frac{a^1}{3} + \frac{a^2}{2} - \frac{a^3}{1} + a^4 I_0 + a^4 \Delta_{I_0}
+\end{align*}
+
+Hieraus folgt:
+\begin{equation*}
+    \tilde{I}_n = \frac{1}{n} - \frac{a^1}{n-1} + \frac{a^2}{n-2} - \cdots + \frac{-a^{n-1}}{1} + (-a)^n I_0 + (-a)^n \Delta_{I_0} = I_n + (-a)^n \Delta_{I_0},
+\end{equation*}
+und
+\begin{equation*}
+    \Delta_{I_n} := \tilde{I}_n - I_n =  (-a)^n \Delta_{I_0}.
+\end{equation*}
+Mit jedem Schritt verstärkt sich der Fehler um den Faktor $|a|$.
+
+\item % e)
+Wir betrachten die Rekursionsformel $I_{n-1} := \displaystyle\frac{\frac{1}{n} - I_n}{a}$ für $n \in \mathbb{N}$ und die Reihenfolge $n = N, N-1, \ldots, 1$ und berechnen den Fehler
+\begin{align*}
+  \Delta_{I_{n}} &:= \tilde{I}_n - I_n. \\
+                 &= \frac{\frac{1}{n+1}-\tilde{I}_{n+1}}{a} - \frac{\frac{1}{n+1}-I_{n+1}}{a} \\
+                 &= \bigg(-\frac{1}{a}\bigg) (\tilde{I}_{n+1} - I_{n+1}) \\
+                 &\vdots \\
+                 &= \bigg(-\frac{1}{a}\bigg)^{N-n} (\tilde{I}_N - I_N) \\
+                 &= \bigg(-\frac{1}{a}\bigg)^{N-n} \Delta_{I_{N}}
+\end{align*}
+
+\item % f)
+Aus (e) erhalten wir
+\begin{align*}
+\Delta_{I_{n}} &= \bigg(-\frac{1}{a}\bigg)^{N-n} \Delta_{I_{N}} \qquad \text{und} \\
+\Delta_{I_{N}} &:= \tilde{I}_N - I_N = \frac{1}{(N+1)a} - I_N.
+\end{align*}
+
+Da aber nach (a) $\displaystyle\frac{1}{(N+1)(a+1)} \leq I_N$ gilt, ist
+\begin{equation*}
+\Delta_{I_{N}} = \frac{1}{(N+1)a} - I_N \leq \frac{1}{(N+1)a} - \frac{1}{(N+1)(a+1)}.
+\end{equation*}
+
+Also gilt die Beziehung:
+\begin{equation*}
+\Delta_{I_{n}} = \bigg(-\frac{1}{a}\bigg)^{N-n} \Delta_{I_{N}} \leq \bigg(-\frac{1}{a}\bigg)^{N-n} \bigg(\frac{1}{(N+1)a} - \frac{1}{(N+1)(a+1)}\bigg).
+\end{equation*}
+
+Wir setzen $a = 10$ und $n^* = 20$ und erhalten:
+\begin{align*}
+|\Delta_{I_{20}}| &\leq \bigg(\frac{1}{10}\bigg)^{N-20} \bigg(\frac{1}{(N+1)10} - \frac{1}{(N+1)11}\bigg) \\
+&= \bigg(\frac{1}{10}\bigg)^{N-20}\bigg(\frac{11}{(N+1)10\cdot11} - \frac{10}{(N+1)11\cdot10}\bigg) \\
+&= 10^{(20-N)}\bigg(\frac{1}{(N+1)10\cdot11}\bigg) \\
+&\leq 10^{(20-N)}\bigg(\frac{1}{(N+1)10^2}\bigg) = \frac{10^{(18-N)}}{(N+1)}.
+\end{align*}
+
+Wenn wir nun $N$ in der Größenordnung $10$ annehmen, erhalten wir
+\begin{equation*}
+|\Delta_{I_{20}}| \leq 10^{(17-N)}.
+\end{equation*}
+
+Also $|\Delta_{I_{20}}| \leq 10^{(-10)}$ für $N \geq 27$.
+
+\qquad
+
+\begin{lstlisting}[language=Python, frame=single, numbers=left]
+#https://www.onlinegdb.com/online_python_compiler
+#https://onlinegdb.com/ryN4rmRKE
+from math import log
+
+#Konstanten
+a = 10
+n_max = 20
+N = 27
+
+#untere Schranke
+m_n = lambda n: 1/((n+1)*(a+1))
+
+#obere Schranke
+M_n = lambda n: 1/((n+1)*a)
+
+#Rekursion
+def I_N(n):
+  if n < N:
+    return (1/(n+1) - I_N(n+1))/a
+  else:
+    return 1/((N+1)*a)
+
+#Ausgabe Bildschirm
+print(" n       m_n     \u2264      I_n     \u2264      M_n")
+print("----------------------------------------------")
+for i in reversed(range(n_max + 1)):
+  print("{:2d}  {: .5e}   {: .5e}   {: .5e}".format(i, m_n(i), I_N(i), M_n(i)))
+\end{lstlisting}
+
+\begin{equation*}
+\begin{array}[t]{ c | c c c c c}
+n & m_n & \leq & \tilde{I}_n & \leq & M_n\\\hline
+20 & \mathtt{+4.32900e-03} &   & \mathtt{+4.34704e-03} &   & \mathtt{+4.76190e-03} \\
+19 & \mathtt{+4.54545e-03} &   & \mathtt{+4.56530e-03} &   & \mathtt{+5.00000e-03} \\
+18 & \mathtt{+4.78469e-03} &   & \mathtt{+4.80663e-03} &   & \mathtt{+5.26316e-03} \\
+17 & \mathtt{+5.05051e-03} &   & \mathtt{+5.07489e-03} &   & \mathtt{+5.55556e-03} \\
+16 & \mathtt{+5.34759e-03} &   & \mathtt{+5.37486e-03} &   & \mathtt{+5.88235e-03} \\
+15 & \mathtt{+5.68182e-03} &   & \mathtt{+5.71251e-03} &   & \mathtt{+6.25000e-03} \\
+14 & \mathtt{+6.06061e-03} &   & \mathtt{+6.09542e-03} &   & \mathtt{+6.66667e-03} \\
+13 & \mathtt{+6.49351e-03} &   & \mathtt{+6.53332e-03} &   & \mathtt{+7.14286e-03} \\
+12 & \mathtt{+6.99301e-03} &   & \mathtt{+7.03898e-03} &   & \mathtt{+7.69231e-03} \\
+11 & \mathtt{+7.57576e-03} &   & \mathtt{+7.62944e-03} &   & \mathtt{+8.33333e-03} \\
+10 & \mathtt{+8.26446e-03} &   & \mathtt{+8.32797e-03} &   & \mathtt{+9.09091e-03} \\
+ 9 & \mathtt{+9.09091e-03} &   & \mathtt{+9.16720e-03} &   & \mathtt{+1.00000e-02} \\
+ 8 & \mathtt{+1.01010e-02} &   & \mathtt{+1.01944e-02} &   & \mathtt{+1.11111e-02} \\
+ 7 & \mathtt{+1.13636e-02} &   & \mathtt{+1.14806e-02} &   & \mathtt{+1.25000e-02} \\
+ 6 & \mathtt{+1.29870e-02} &   & \mathtt{+1.31377e-02} &   & \mathtt{+1.42857e-02} \\
+ 5 & \mathtt{+1.51515e-02} &   & \mathtt{+1.53529e-02} &   & \mathtt{+1.66667e-02} \\
+ 4 & \mathtt{+1.81818e-02} &   & \mathtt{+1.84647e-02} &   & \mathtt{+2.00000e-02} \\
+ 3 & \mathtt{+2.27273e-02} &   & \mathtt{+2.31535e-02} &   & \mathtt{+2.50000e-02} \\
+ 2 & \mathtt{+3.03030e-02} &   & \mathtt{+3.10180e-02} &   & \mathtt{+3.33333e-02} \\
+ 1 & \mathtt{+4.54545e-02} &   & \mathtt{+4.68982e-02} &   & \mathtt{+5.00000e-02} \\
+ 0 & \mathtt{+9.09091e-02} &   & \mathtt{+9.53102e-02} &   & \mathtt{+1.00000e-01} \\
+\end{array}
+\end{equation*}
+
+\end{enumerate}
+\end{document}
