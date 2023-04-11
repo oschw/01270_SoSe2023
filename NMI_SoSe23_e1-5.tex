@@ -1,0 +1,167 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{fancyhdr}
+\usepackage[ngerman,german]{babel}
+\usepackage{german}
+\usepackage[utf8]{inputenc}
+\usepackage[active]{srcltx}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{struktex}
+\usepackage{hyperref}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{geometry}
+\usepackage{calc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% EDIT THIS PART %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Fach}{01270 Numerische Mathematik I}
+\newcommand{\FachKurz}{NMI}
+\newcommand{\Name}{Oliver Schwarz}
+\newcommand{\Matrikelnummer}{6883389}
+\newcommand{\Semester}{SoSe 23}
+\newcommand{\Kurseinheit}{1}
+\newcommand{\AufgabeNummer}{5}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DO NOT EDIT THIS PART %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Aufgabe}[1]{
+  {
+  \vspace*{0.5cm}
+  \textbf{Aufgabe #1}
+  \vspace*{0.2cm}
+  }
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PAGE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\parindent}{0em}
+\topmargin 0cm
+\oddsidemargin 0cm
+\evensidemargin 0cm
+
+\geometry{%
+  left=45.0mm,
+  right=15.0mm,
+  top=25mm,
+  bottom=25mm,
+  bindingoffset=0mm,
+  headheight=30pt,
+  includehead
+}
+
+\fancyheadoffset[L]{20mm}
+\renewcommand{\headrulewidth}{1pt}
+
+\pagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PDF SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hypersetup{
+    %pdftitle={\Fach{}: Übungsblatt \Uebungsblatt{}},
+    pdftitle={\Fach{}: Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}},
+    pdfauthor={\Name},
+    pdfborder={0 0 0}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% CODE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lstset{ %
+language=java,
+basicstyle=\footnotesize\tt,
+showtabs=false,
+tabsize=2,
+captionpos=b,
+breaklines=true,
+extendedchars=true,
+showstringspaces=false,
+flexiblecolumns=true,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}}
+\author{\Name{}}
+
+\begin{document}
+
+%\renewcommand{\theequation}{L\Kurseinheit{}.\AufgabeNummer{}.\arabic{equation}}
+\renewcommand{\theequation}{L \AufgabeNummer{}.\arabic{equation}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lhead{\sf \large \Fach{} \\ \small \Name{} - \Matrikelnummer{}}
+%\rhead{\sf \Semester{}}
+\rhead{\sf \FachKurz{} \quad E \Kurseinheit{}/\AufgabeNummer{}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% START HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Aufgabe{\AufgabeNummer{} \quad (Kondition)} 
+
+Es ist $z := f(x) := 1 - \cos^2(x)$ mit $x \in \mathbb{R}$ und $|x| \ll 1$. Weiterhin ist $f(0) = 0$ und $0 \leq f(x) \leq 1$ für alle $x \in \mathbb{R}$.
+
+\begin{enumerate}[a)]
+\item % a)
+\begin{align*}
+    \kappa_{f(x)} &= \frac{x}{f(x)} f'(x) \\
+    &= \frac{x}{1 - \cos^2(x)} \, 2 \sin(x) \cos(x) \\
+    &= 2 x \frac{\sin(x) \cos(x)}{\sin^2(x)} \\
+    \kappa_{f(x)} &= 2 x \frac{\cos(x)}{\sin(x)}.
+\end{align*}
+
+Nach \textsc{de l'Hospital} ist $\lim\limits_{x \rightarrow 0} \frac{x}{\sin{x}} = \lim\limits_{x \rightarrow 0} \frac{1}{\cos{x}} = 1$, also $\lim\limits_{x \rightarrow 0} \kappa_{f(x)} = 2$ und $\kappa_{f(x)} \leq 2$ für $|x| \ll 1$: Die Aufgabe ist gut konditioniert.
+
+\item % b)
+Wir betrachten den Algorithmus
+$$y_1 := \cos x, \quad y_2 := y_1^2, \quad \textrm{und} \quad z := 1 - y_2.$$
+
+Wir rollen den Algorithmus von hinten auf und ersetzen $y_2 = y_1^2$:
+\begin{align}
+    z &= 1 - y_2 \label{eq:1}\\
+    z &= 1 - y_1^2 \label{eq:2}
+\end{align}
+
+Wir bestimmen die Konditionszahlen wie in Teilaufgabe (a) mit \eqref{eq:1} und \eqref{eq:2}:
+\begin{align*}
+    \kappa_1 &:= \frac{y_1}{z} \frac{\partial z}{\partial y_1} = -2\frac{y_1^2}{z} 
+              = -2 \frac{\cos^2(x)}{\sin^2(x)} \longrightarrow - \infty \qquad \text{für} \ x \rightarrow 0,\\
+    \kappa_2 &:= \frac{y_2}{z} \frac{\partial z}{\partial y_2} = -\frac{y_2}{z}
+              = - \frac{\cos^2(x)}{\sin^2(x)} \longrightarrow - \infty \qquad \text{für} \ x \rightarrow 0.
+\end{align*}
+
+Die Beträge der Konditionszahlen werden sehr groß für $x \rightarrow 0$ im Vergleich zur Konditionszahl der Aufgabe. Der Algorithmus ist also numerisch instabil.
+\item % c)
+Für die Berechnung der Konditionszahl in Teilaufgabe (a) haben wir die Beziehung $1 - \cos^2(x) = \sin^2(x)$ genutzt. Setzen wir $z := 1 - \cos^2(x) = \sin^2(x) =: \tilde{z}$, dann erhalten wir den Algorithmus
+$$\tilde{y}_1 := \sin x \quad \textrm{und} \qquad \tilde{z} := \tilde{y}_1^2.$$
+
+Wir bestimmen die Konditionszahl für $\tilde{z} = \tilde{y}_1^2$:
+\begin{equation*}
+    \tilde{\kappa}_1 := \frac{\tilde{y}_1}{\tilde{z}} \frac{\partial \tilde{z}}{\partial \tilde{y}_1} = 2\frac{\tilde{y}_1^2}{\tilde{z}} = 2 \frac{\sin^2(x)}{\sin^2(x)} = 2.\\    
+\end{equation*}
+
+Der Algorithmus ist numerisch stabil, denn die Konditionszahl $\tilde{\kappa}_1 = 2$ des Algorithmus ist klein und gleich der Konditionszahl $\kappa_{f(x)} = 2$ der Aufgabe. 
+\end{enumerate}
+\end{document}

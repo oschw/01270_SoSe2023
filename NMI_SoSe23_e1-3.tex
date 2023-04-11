@@ -1,0 +1,185 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{fancyhdr}
+\usepackage[ngerman,german]{babel}
+\usepackage{german}
+\usepackage[utf8]{inputenc}
+\usepackage[active]{srcltx}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{struktex}
+\usepackage{hyperref}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{geometry}
+\usepackage{calc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% EDIT THIS PART %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Fach}{01270 Numerische Mathematik I}
+\newcommand{\FachKurz}{NMI}
+\newcommand{\Name}{Oliver Schwarz}
+\newcommand{\Matrikelnummer}{6883389}
+\newcommand{\Semester}{SoSe 23}
+\newcommand{\Kurseinheit}{1}
+\newcommand{\AufgabeNummer}{3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DO NOT EDIT THIS PART %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Aufgabe}[1]{
+  {
+  \vspace*{0.5cm}
+  \textbf{Aufgabe #1}
+  \vspace*{0.2cm}
+  }
+}
+
+%Maschinengenauigkeit eps
+\newcommand{\eps}[0]{
+  {
+  \mathtt{eps}
+  }
+}
+
+%epsilon
+\newcommand{\e}[0]{
+  {
+  \varepsilon
+  }
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PAGE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\parindent}{0em}
+\topmargin 0cm
+\oddsidemargin 0cm
+\evensidemargin 0cm
+
+\geometry{%
+  left=45.0mm,
+  right=15.0mm,
+  top=25mm,
+  bottom=25mm,
+  bindingoffset=0mm,
+  headheight=30pt,
+  includehead
+}
+
+\fancyheadoffset[L]{20mm}
+\renewcommand{\headrulewidth}{1pt}
+
+\pagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PDF SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hypersetup{
+    %pdftitle={\Fach{}: Übungsblatt \Uebungsblatt{}},
+    pdftitle={\Fach{}: Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}},
+    pdfauthor={\Name},
+    pdfborder={0 0 0}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% CODE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lstset{ %
+language=java,
+basicstyle=\footnotesize\tt,
+showtabs=false,
+tabsize=2,
+captionpos=b,
+breaklines=true,
+extendedchars=true,
+showstringspaces=false,
+flexiblecolumns=true,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}}
+\author{\Name{}}
+
+\begin{document}
+
+%\renewcommand{\theequation}{L\Kurseinheit{}.\AufgabeNummer{}.\arabic{equation}}
+\renewcommand{\theequation}{L \AufgabeNummer{}.\arabic{equation}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lhead{\sf \large \Fach{} \\ \small \Name{} - \Matrikelnummer{}}
+%\rhead{\sf \Semester{}}
+\rhead{\sf \FachKurz{} \quad E \Kurseinheit{}/\AufgabeNummer{}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% START HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Aufgabe{\AufgabeNummer{} \quad (Rundungsfehler)}
+
+Wir betrachten die Gleitkommazahlen $x, y \in \mathbb{M}_b (m, [e_*, e^*])$ und berechnen
+\begin{equation*}
+z := x^2 - y^2 = (x-y)(x+y).    
+\end{equation*}
+
+Weiterhin sei $\eps$ die Maschinengenauigkeit.
+
+
+\begin{enumerate}[a)]
+\item % a)
+$z_1 := (x \otimes x) \ominus (y \otimes y)$
+
+Es gilt
+\begin{align*}
+    z_1 &= (x \otimes x) \ominus (y \otimes y) = ((1 + \e_1)x^2 - (1 + \e_2)y^2)(1 + \e_3) \\
+    &= (x^2 - y^2) + (\e_1 + \e_3 + \e_1\e_3) x^2 - (\e_2 + \e_3 + \e_2\e_3) y^2
+\end{align*}
+mit $|\e_i| \leq \eps$ und $i = 1, 2, 3$. 
+
+Wir berechnen den relativen Fehler:
+\begin{align*}
+\frac{z_1 - z}{z} &= \frac{(x^2 - y^2) + (\e_1 + \e_3 + \e_1\e_3) x^2 - (\e_2 + \e_3 + \e_2\e_3) y^2 - (x^2 - y^2)}{(x^2 - y^2)} \\
+                  &= \frac{(\e_1 + \e_3 + \e_1\e_3) x^2 - (\e_2 + \e_3 + \e_2\e_3) y^2}{(x^2 - y^2)} \\
+                  &\doteqdot (\e_1 + \e_3) \frac{ x^2}{(x^2 - y^2)} - (\e_2 + \e_3) \frac{y^2}{(x^2 - y^2)}.
+\end{align*}
+Demnach wird der Fehler für $x \approx y$ groß.
+
+\item % b)
+$z_2 := (x \ominus y) \otimes (x \oplus y)$
+
+Es ist
+\begin{align*}
+    z_2 &= (x \ominus y) \otimes (x \oplus y) = (1 + \e_1)(x - y) (1 + \e_2)(x + y) (1 + \e_3) \\
+    &= (x^2 - y^2)(1 + \e_1)(1 + \e_2)(1 + \e_3).
+\end{align*}
+mit $|\e_i| \leq \eps$ und $i = 1, 2, 3$. 
+
+Wir berechnen den relativen Fehler:
+\begin{align*}
+\frac{z_2 - z}{z} &= \frac{(x^2 - y^2)(1 + \e_1)(1 + \e_2)(1 + \e_3) - (x^2 - y^2)}{(x^2 - y^2)} \\
+                  &= \frac{((1 + \e_1)(1 + \e_2)(1 + \e_3) - 1)(x^2 - y^2)}{(x^2 - y^2)} \\
+                  &= (1 + \e_1)(1 + \e_2)(1 + \e_3) - 1 \\
+                  &= 1 + \e_1 + \e_2 + \e_3 + \e_1\e_2 + \e_1\e_3 + \e_2\e_3 + \e_1\e_2\e_3 - 1 \\
+                  &\doteqdot \e_1 + \e_2 + \e_3.
+\end{align*}
+Demnach ist der relative Fehler von $z_2$ immer maximal $3 \eps$ und unabhängig von $x$ und $y$. Somit ist $z_2$ gegenüber $z_1$ vorzuziehen.
+\end{enumerate}
+\end{document}

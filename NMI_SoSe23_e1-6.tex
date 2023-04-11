@@ -1,0 +1,156 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{fancyhdr}
+\usepackage[ngerman,german]{babel}
+\usepackage{german}
+\usepackage[utf8]{inputenc}
+\usepackage[active]{srcltx}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{struktex}
+\usepackage{hyperref}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{geometry}
+\usepackage{calc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% EDIT THIS PART %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Fach}{01270 Numerische Mathematik I}
+\newcommand{\FachKurz}{NMI}
+\newcommand{\Name}{Oliver Schwarz}
+\newcommand{\Matrikelnummer}{6883389}
+\newcommand{\Semester}{SoSe 23}
+\newcommand{\Kurseinheit}{1}
+\newcommand{\AufgabeNummer}{6}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DO NOT EDIT THIS PART %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Aufgabe}[1]{
+  {
+  \vspace*{0.5cm}
+  \textbf{Aufgabe #1}
+  \vspace*{0.2cm}
+  }
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PAGE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\parindent}{0em}
+\topmargin 0cm
+\oddsidemargin 0cm
+\evensidemargin 0cm
+
+\geometry{%
+  left=45.0mm,
+  right=15.0mm,
+  top=25mm,
+  bottom=25mm,
+  bindingoffset=0mm,
+  headheight=30pt,
+  includehead
+}
+
+\fancyheadoffset[L]{20mm}
+\renewcommand{\headrulewidth}{1pt}
+
+\pagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PDF SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hypersetup{
+    %pdftitle={\Fach{}: Übungsblatt \Uebungsblatt{}},
+    pdftitle={\Fach{}: Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}},
+    pdfauthor={\Name},
+    pdfborder={0 0 0}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% CODE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lstset{ %
+language=java,
+basicstyle=\footnotesize\tt,
+showtabs=false,
+tabsize=2,
+captionpos=b,
+breaklines=true,
+extendedchars=true,
+showstringspaces=false,
+flexiblecolumns=true,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}}
+\author{\Name{}}
+
+\begin{document}
+
+%\renewcommand{\theequation}{L\Kurseinheit{}.\AufgabeNummer{}.\arabic{equation}}
+\renewcommand{\theequation}{L \AufgabeNummer{}.\arabic{equation}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lhead{\sf \large \Fach{} \\ \small \Name{} - \Matrikelnummer{}}
+%\rhead{\sf \Semester{}}
+\rhead{\sf \FachKurz{} \quad E \Kurseinheit{}/\AufgabeNummer{}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% START HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Aufgabe{\AufgabeNummer{} \quad (Kondition von Verkettungen)} 
+
+Ist
+
+$$f := f_1 \circ f_2 \circ \cdots \circ f_k = f_1( f_2( \cdots f_k(\cdot) \cdots)), \, k \in \mathbb{N},$$
+
+die Verkettung von $k$ differenzierbaren Funktionen $f_{i}: \mathbb{R} \rightarrow \mathbb{R}, i = 1, \ldots, k$, und ist $f_{i}( f_{i+1} \circ \cdots \circ f_{k}(x)) \neq 0$ für $i = 1, \ldots, k-1$ sowie $f_{k}(x) \neq 0$, dann sind
+
+\begin{align}
+    \kappa_{f(x)} &= \frac{x}{f(x)} f'(x) \notag \\
+    &= \frac{x}{f_1 \circ f_2 \circ \cdots \circ f_k(x)} \, f_1'(f_2 \circ f_3 \circ \cdots \circ f_k(x)) \, (f_2 \circ f_3 \circ \cdots \circ f_k)'(x) \label{eq:1}
+\end{align}
+
+und
+
+\begin{equation}
+    \kappa_{f_1}(f_2 \circ f_3 \circ \cdots \circ f_k(x)) = \frac{f_2 \circ f_3 \circ \cdots \circ f_k(x)}{f_1 \circ f_2 \circ \cdots \circ f_k(x)} \, f_1'(f_2 \circ f_3 \circ \cdots \circ f_k(x)). \label{eq:2}
+\end{equation}
+
+Erweitern wir \eqref{eq:1} mit $\displaystyle\frac{f_2 \circ f_3 \circ \cdots \circ f_k(x)}{f_2 \circ f_3 \circ \cdots \circ f_k(x)}$, können wir (einen Teil von) \eqref{eq:1} in \eqref{eq:2} überführen:
+
+\begin{align*}
+    \kappa_{f(x)} &= \frac{f_2 \circ f_3 \circ  \cdots \circ f_k(x)}{f_1 \circ f_2 \circ \cdots \circ f_k(x)} \, f_1'(f_2 \circ \cdots \circ f_k(x)) \quad \frac{x}{f_2 \circ f_3  \circ \cdots \circ f_k(x)} \, (f_2\circ \cdots \circ f_k)'(x) \\
+    &= \kappa_{f_1}(f_2 \circ f_3 \circ \cdots \circ f_k(x)) \, \frac{x}{f_2 \circ f_3 \circ \cdots \circ f_k} \, (f_2 \circ \cdots \circ f_k)'(x).
+\end{align*}
+
+Dies wiederholen wir für alle $i = 2, \ldots, k-1$ und erhalten (für die Übersichtlichkeit etwas ungenauer notiert):
+
+\begin{align*}
+    \kappa_{f(x)} &=  \kappa_{f_1} \kappa_{f_2} \cdots \kappa_{f_{k-1}}\, \frac{x}{f_k} \, f_k' \\
+    &= \frac{x}{f_k} \, f_k' \, \prod_{i=1}^{k-1}\kappa_{f_i} \\
+    &= \kappa_{f_k} \, \prod_{i=1}^{k-1}\kappa_{f_i}.
+\end{align*}
+
+\end{document}

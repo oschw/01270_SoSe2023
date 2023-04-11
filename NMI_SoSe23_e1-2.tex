@@ -1,0 +1,215 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{fancyhdr}
+\usepackage[ngerman,german]{babel}
+\usepackage{german}
+\usepackage[utf8]{inputenc}
+\usepackage[active]{srcltx}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{struktex}
+\usepackage{hyperref}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{geometry}
+\usepackage{calc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% EDIT THIS PART %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Fach}{01270 Numerische Mathematik I}
+\newcommand{\FachKurz}{NMI}
+\newcommand{\Name}{Oliver Schwarz}
+\newcommand{\Matrikelnummer}{6883389}
+\newcommand{\Semester}{SoSe 23}
+\newcommand{\Kurseinheit}{1}
+\newcommand{\AufgabeNummer}{2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DO NOT EDIT THIS PART %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Aufgabe}[1]{
+  {
+  \vspace*{0.5cm}
+  \textbf{Aufgabe #1}
+  \vspace*{0.2cm}
+  }
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PAGE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\parindent}{0em}
+\topmargin 0cm
+\oddsidemargin 0cm
+\evensidemargin 0cm
+
+\geometry{%
+  left=45.0mm,
+  right=15.0mm,
+  top=25mm,
+  bottom=25mm,
+  bindingoffset=0mm,
+  headheight=30pt,
+  includehead
+}
+
+\fancyheadoffset[L]{20mm}
+\renewcommand{\headrulewidth}{1pt}
+
+\pagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PDF SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hypersetup{
+    %pdftitle={\Fach{}: Übungsblatt \Uebungsblatt{}},
+    pdftitle={\Fach{}: Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}},
+    pdfauthor={\Name},
+    pdfborder={0 0 0}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% CODE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lstset{ %
+language=java,
+basicstyle=\footnotesize\tt,
+showtabs=false,
+tabsize=2,
+captionpos=b,
+breaklines=true,
+extendedchars=true,
+showstringspaces=false,
+flexiblecolumns=true,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}}
+\author{\Name{}}
+
+\begin{document}
+
+%\renewcommand{\theequation}{L\Kurseinheit{}.\AufgabeNummer{}.\arabic{equation}}
+\renewcommand{\theequation}{L \AufgabeNummer{}.\arabic{equation}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lhead{\sf \large \Fach{} \\ \small \Name{} - \Matrikelnummer{}}
+%\rhead{\sf \Semester{}}
+\rhead{\sf \FachKurz{} \quad E \Kurseinheit{}/\AufgabeNummer{}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% START HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Aufgabe{\AufgabeNummer{} \quad (Gleitkommadarstellung)} 
+
+\begin{enumerate}[a)]
+\item % a)
+\begin{enumerate}[\itshape(i)]
+    \item % (i) 133.7
+        \begin{equation*}
+        133.7 = + \, 0.1337 \, \times \, 10^3 \, \notin \mathbb{M}_{10}(4, [-2, 2]),
+        \end{equation*}
+        da für den Exponenten $e \in [-2, 2]$ gilt und $3 \notin [-2, 2]$. Es findet ein \textit{Überlauf} statt.
+    
+    \item % (ii) 0.0001
+        \begin{align*}
+            0.0001 
+             &= + \, 0.0001 \, \times \, 10^{0} \\%\, \in \mathbb{M}_{10}(4, [-2, 2]) \\
+             &= + \, 0.0010 \, \times \, 10^{-1} \\%\, \in \mathbb{M}_{10}(4, [-2, 2]) \\
+             &= + \, 0.0100 \, \times \, 10^{-2} \, \in \mathbb{\mathring{M}}_{10}(4, [-2, 2]) \setminus \mathbb{M}_{10}(4, [-2, 2])
+        \end{align*}
+        Die Zahl gehört somit zu den \textit{denormalisierten Gleitkommazahlen}.
+\end{enumerate}
+
+\item % b)
+\begin{enumerate}[\itshape(i)]
+    \item % (i) 16/27
+    
+    \begin{equation*}
+      \frac{16}{27} = \frac{5}{9} + \frac{1}{27} = \frac{1}{3} + \frac{2}{9} + \frac{1}{27}
+    \end{equation*}
+    \begin{equation*}
+      \bigg( \frac{16}{27} \bigg)_{10} = (0.121)_{3} = (0.\overline{592})_{10}
+    \end{equation*}
+    
+    Die 3-adische Darstellung ist endlich; die 10-adische Darstellung ist es nicht.
+    
+    \item % (ii) 0.0001
+
+    \begin{align*}
+        0.3 = \frac{3}{10} &=  \frac{2}{3^2} + \frac{7}{3^2 \times 10}\\
+        \frac{7}{3^2 \times 10} &= \frac{2}{3^3} + \frac{1}{3^3 \times 10}\\
+        \frac{1}{3^3 \times 10} &= \frac{2}{3^6} + \frac{7}{3^6 \times 10}\\
+        \frac{7}{3^6 \times 10} &= \frac{2}{3^7} + \frac{1}{3^7 \times 10}
+    \end{align*}
+ 
+    \begin{equation*}
+        (0.3)_{10} = (0.\overline{0220})_{3}
+    \end{equation*}
+    
+    Die 10-adische Darstellung ist endlich; die 3-adische Darstellung ist es nicht.
+\end{enumerate}
+
+\item % c)
+Betrachtet werden die normalisierten $(i)$ und denormalisierten $(ii)$ Gleitkommazahlen mit Mantissenlänge $m = 2$, Basis $b = 3$ und Exponentenbereich $e \in \{-1, 0\}$. Die in der Darstellung möglichen Ziffern sind 0, 1 und 2. Bei $(i)$ muss die erste Nachkommastelle der Mantisse von 0 verschieden sein.
+
+In den unten stehenden Tabellen stehen alle vorkommenden Mantissen in der ersten Spalte und deren Werte in der zweiten Spalte. Die Ergebnisse der Multiplikation von Mantisse und $3^e$ stehen in der dritten und vierten Spalte.
+
+\begin{enumerate}[\itshape(i)]
+    \item % (i)
+
+    $\mathbb{M}_3(2,[-1,0])$
+    \begin{equation*}    
+        \begin{array}[t]{| c | l | c | c |}\hline
+            m    & x = \frac{\alpha_1}{3} + \frac{\alpha_2}{9} & x \cdot 3^{-1} & x \cdot 3^{0} \\\hline
+            0.10 & \frac{1}{3}                                 & \frac{1}{9}    & \frac{1}{3} \\
+            0.20 & \frac{2}{3}                                 & \frac{2}{9}    & \frac{2}{3} \\
+            0.11 & \frac{1}{3} + \frac{1}{9} = \frac{4}{9}     & \frac{4}{27}   & \frac{4}{9} \\
+            0.21 & \frac{2}{3} + \frac{1}{9} = \frac{7}{9}     & \frac{7}{27}   & \frac{7}{9} \\
+            0.12 & \frac{1}{3} + \frac{2}{9} = \frac{5}{9}     & \frac{5}{27}   & \frac{5}{9} \\
+            0.22 & \frac{2}{3} + \frac{2}{9} = \frac{8}{9}     & \frac{8}{27}   & \frac{8}{9} \\\hline
+        \end{array}
+    \end{equation*}
+
+    Zusätzlich gehört noch die 0 zu $\mathbb{M}_3(2,[-1,0])$.
+    \item % (ii)
+   
+    $\mathring{\mathbb{M}}_3(2,[-1,0])$
+    \begin{equation*}    
+        \begin{array}[t]{| c | l | c | c |}\hline
+            m    & x = \frac{\alpha_1}{3} + \frac{\alpha_2}{9} & x \cdot 3^{-1} & x \cdot 3^{0} \\\hline
+            0.00 & 0                                           & 0              & 0 \\
+            0.10 & \frac{1}{3}                                 & \frac{1}{9}    & \frac{1}{3} \\
+            0.20 & \frac{2}{3}                                 & \frac{2}{9}    & \frac{2}{3} \\
+            0.01 & \frac{1}{9}                                 & \frac{1}{27}   & \frac{1}{9} \\
+            0.11 & \frac{1}{3} + \frac{1}{9} = \frac{4}{9}     & \frac{4}{27}   & \frac{4}{9} \\
+            0.21 & \frac{2}{3} + \frac{1}{9} = \frac{7}{9}     & \frac{7}{27}   & \frac{7}{9} \\
+            0.02 & \frac{2}{9}                                 & \frac{2}{27}   & \frac{2}{9} \\
+            0.12 & \frac{1}{3} + \frac{2}{9} = \frac{5}{9}     & \frac{5}{27}   & \frac{5}{9} \\
+            0.22 & \frac{2}{3} + \frac{2}{9} = \frac{8}{9}     & \frac{8}{27}   & \frac{8}{9} \\\hline
+        \end{array}
+    \end{equation*}
+
+\end{enumerate}
+\end{enumerate}
+
+\end{document}
