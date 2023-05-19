@@ -1,0 +1,285 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{fancyhdr}
+\usepackage[ngerman,german]{babel}
+\usepackage{german}
+\usepackage[utf8]{inputenc}
+\usepackage[active]{srcltx}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{struktex}
+\usepackage{hyperref}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{geometry}
+\usepackage{calc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% EDIT THIS PART %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Fach}{01270 Numerische Mathematik I}
+\newcommand{\FachKurz}{NMI}
+\newcommand{\Name}{Oliver Schwarz}
+\newcommand{\Matrikelnummer}{6883389}
+\newcommand{\Semester}{SoSe 23}
+\newcommand{\Kurseinheit}{4}
+\newcommand{\AufgabeNummer}{2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DO NOT EDIT THIS PART %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Aufgabe}[1]{
+  {
+  \vspace*{0.5cm}
+  \textbf{Aufgabe #1}
+  \vspace*{0.2cm}
+  }
+}
+
+\newcommand{\cond}[0]{
+  {
+  \textrm{cond}
+  }
+}
+
+% Beschreibung
+% Unterscheidet im Mathe-Mode zwischen
+% "Dezimal-komma" und Satzzeichen.
+% Muss bei Eingabe durch kein/ein Leerzeichen
+% dahinter angegeben werden.
+% Literatur Richard Hirsch in: DTK, 1/1994, S. 42 ff.
+\mathchardef\CommaOrdinary="013B \mathchardef\CommaPunct="613B
+\mathcode`,="8000 % , im Math-Mode aktiv ("8000) machen
+{\catcode`\,=\active \gdef
+,{\obeyspaces\futurelet\next\CommaCheck}}
+\def\CommaCheck{\if\space\next\CommaPunct\else\CommaOrdinary\fi}
+
+% For comparison, the existing overlap macros:
+% \def\llap#1{\hbox to 0pt{\hss#1}}
+% \def\rlap#1{\hbox to 0pt{#1\hss}}
+\def\clap#1{\hbox to 0pt{\hss#1\hss}}
+\def\mathllap{\mathpalette\mathllapinternal}
+\def\mathrlap{\mathpalette\mathrlapinternal}
+\def\mathclap{\mathpalette\mathclapinternal}
+\def\mathllapinternal#1#2{%
+\llap{$\mathsurround=0pt#1{#2}$}}
+\def\mathrlapinternal#1#2{%
+\rlap{$\mathsurround=0pt#1{#2}$}}
+\def\mathclapinternal#1#2{%
+\clap{$\mathsurround=0pt#1{#2}$}}
+
+\DeclareSymbolFont{matha}{OML}{txmi}{m}{it}% txfonts
+\DeclareMathSymbol{\varv}{\mathord}{matha}{118}
+\DeclareMathSymbol{\varw}{\mathord}{matha}{119}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PAGE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\parindent}{0em}
+\topmargin 0cm
+\oddsidemargin 0cm
+\evensidemargin 0cm
+
+\geometry{%
+  left=45.0mm,
+  right=15.0mm,
+  top=25mm,
+  bottom=25mm,
+  bindingoffset=0mm,
+  headheight=30pt,
+  includehead
+}
+
+\fancyheadoffset[L]{20mm}
+\renewcommand{\headrulewidth}{1pt}
+
+\pagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PDF SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hypersetup{
+    %pdftitle={\Fach{}: Übungsblatt \Uebungsblatt{}},
+    pdftitle={\Fach{}: Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}},
+    pdfauthor={\Name},
+    pdfborder={0 0 0}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% CODE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lstset{ %
+language=java,
+basicstyle=\footnotesize\tt,
+showtabs=false,
+tabsize=2,
+captionpos=b,
+breaklines=true,
+extendedchars=true,
+showstringspaces=false,
+flexiblecolumns=true,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}}
+\author{\Name{}}
+
+\begin{document}
+
+%\renewcommand{\theequation}{L\Kurseinheit{}.\AufgabeNummer{}.\arabic{equation}}
+\renewcommand{\theequation}{L \AufgabeNummer{}.\arabic{equation}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lhead{\sf \large \Fach{} \\ \small \Name{} - \Matrikelnummer{}}
+%\rhead{\sf \Semester{}}
+\rhead{\sf \FachKurz{} \quad E \Kurseinheit{}/\AufgabeNummer{}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% START HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Aufgabe{\AufgabeNummer{}}
+
+\begin{align*}
+\text{S1.} \quad &\\
+\mathrlap{k := 2} \\
+\mathrlap{\pmb{A}^{(0)} :=
+\begin{pmatrix}
+    0 & -2 & -1 \\
+    0 &  0 & -1 \\
+    4 &  5 &  2
+\end{pmatrix}}\\
+\mathrlap{\pmb{b}^{(0)} :=
+\begin{pmatrix}
+    1 \\
+    1 \\
+    1
+\end{pmatrix}}\\
+&i = 1: &&\\
+&&&\pmb{a} :=
+\begin{pmatrix}
+    0 \\
+    0 \\
+    4
+\end{pmatrix}, \quad
+\xi := ||\pmb{a}||_2 = 4, \quad
+\alpha := -\xi = -4,\\
+&&&\pmb{\varv} := \pmb{a} - \alpha \pmb{e}^1 =
+\begin{pmatrix}
+    4 \\
+    0 \\
+    4
+\end{pmatrix}, \quad
+\gamma := \frac{2}{\pmb{\varv}\pmb{\varv}^H} = \frac{1}{16}, \quad
+\pmb{\varw} := \pmb{\varv}^H \pmb{A}^{(0)} = (16, 12, 4),\\
+&&&\pmb{H}_{\pmb{\varv}}^{(1)} := \pmb{I} - \gamma \pmb{\varv \varv}^H =
+\begin{pmatrix}
+    0 &  0 & -1 \\
+    0 &  1 &  0 \\
+   -1 &  0 &  1
+\end{pmatrix}, \\
+&&&\pmb{A}^{(1)} := \pmb{A}^{(0)} - \gamma \pmb{\varv \varw} =
+\begin{pmatrix}
+   -4 & -5 & -2 \\
+    0 &  0 & -1 \\
+    0 &  2 &  1
+\end{pmatrix}, \\
+&&&\pmb{b}^{(1)} := \pmb{b}^{(0)} - \gamma(\pmb{\varv}^H\pmb{b}^{(0)})\pmb{\varv} =
+\begin{pmatrix}
+   -1 \\
+    1 \\
+   -1
+\end{pmatrix}.
+\end{align*}
+\begin{align*}
+&i = 2: &&\\
+&&&\pmb{a} :=
+\begin{pmatrix}
+    0 \\
+    0 \\
+    2
+\end{pmatrix}, \quad
+\xi := ||\pmb{a}||_2 = 2, \quad
+\alpha := -\xi = -2,\\
+&&&\pmb{\varv} := \pmb{a} - \alpha \pmb{e}^2 =
+\begin{pmatrix}
+    0 \\
+    2 \\
+    2
+\end{pmatrix}, \quad
+\gamma := \frac{2}{\pmb{\varv}\pmb{\varv}^H} = \frac{1}{4}, \quad
+\pmb{\varw} := \pmb{\varv}^H \pmb{A}^{(0)} = (0, 4, 0),\\
+&&&\pmb{H}_{\pmb{\varv}}^{(2)} := \pmb{I} - \gamma \pmb{\varv \varv}^H =
+\begin{pmatrix}
+    0 &  0 & -1 \\
+    0 &  1 &  0 \\
+   -1 &  0 &  1
+\end{pmatrix}, \\
+&&&\pmb{A}^{(2)} := \pmb{A}^{(1)} - \gamma \pmb{\varv \varw} =
+\begin{pmatrix}
+   -4 & -5 & -2 \\
+    0 & -2 & -1 \\
+    0 &  0 &  1
+\end{pmatrix}, \\
+&&&\pmb{b}^{(2)} := \pmb{b}^{(1)} - \gamma(\pmb{\varv}^H\pmb{b}^{(1)})\pmb{\varv} =
+\begin{pmatrix}
+   -1 \\
+    1 \\
+   -1
+\end{pmatrix}.\\
+&\mathrlap{\textit{Zwischenergebnis:}} &&\\
+&&&\pmb{R} =
+\begin{pmatrix}
+   -4 & -5 & -2 \\
+    0 & -2 & -1 \\
+    0 &  0 &  1
+\end{pmatrix}, \quad
+\pmb{Q} = \pmb{H}_{\pmb{\varv}}^{(1)} \pmb{H}_{\pmb{\varv}}^{(2)} = 
+\begin{pmatrix}
+    0 &  1 &  0 \\
+    0 &  0 & -1 \\
+   -1 &  0 &  0
+\end{pmatrix}\\
+\text{S2.} \quad & \\
+&&&\pmb{Rx} = \pmb{Q}^H \pmb{b},\\
+&&&\begin{pmatrix}
+   -4 & -5 & -2 \\
+    0 & -2 & -1 \\
+    0 &  0 &  1
+\end{pmatrix}
+\begin{pmatrix}
+   x_1 \\
+   x_2 \\
+   x_3
+\end{pmatrix} = 
+\begin{pmatrix}
+   -1 \\
+    1 \\
+   -1
+\end{pmatrix}, \quad
+\pmb{x} =
+\begin{pmatrix}
+   \frac{3}{4} \\
+    0 \\
+   -1
+\end{pmatrix}.
+\end{align*}
+
+
+\end{document}

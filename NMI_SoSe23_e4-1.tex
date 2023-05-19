@@ -1,0 +1,157 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{fancyhdr}
+\usepackage[ngerman,german]{babel}
+\usepackage{german}
+\usepackage[utf8]{inputenc}
+\usepackage[active]{srcltx}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{struktex}
+\usepackage{hyperref}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{geometry}
+\usepackage{calc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% EDIT THIS PART %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Fach}{01270 Numerische Mathematik I}
+\newcommand{\FachKurz}{NMI}
+\newcommand{\Name}{Oliver Schwarz}
+\newcommand{\Matrikelnummer}{6883389}
+\newcommand{\Semester}{SoSe 23}
+\newcommand{\Kurseinheit}{4}
+\newcommand{\AufgabeNummer}{1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DO NOT EDIT THIS PART %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Aufgabe}[1]{
+  {
+  \vspace*{0.5cm}
+  \textbf{Aufgabe #1}
+  \vspace*{0.2cm}
+  }
+}
+
+\newcommand{\cond}[0]{
+  {
+  \textrm{cond}
+  }
+}
+
+% Beschreibung
+% Unterscheidet im Mathe-Mode zwischen
+% "Dezimal-komma" und Satzzeichen.
+% Muss bei Eingabe durch kein/ein Leerzeichen
+% dahinter angegeben werden.
+% Literatur Richard Hirsch in: DTK, 1/1994, S. 42 ff.
+\mathchardef\CommaOrdinary="013B \mathchardef\CommaPunct="613B
+\mathcode`,="8000 % , im Math-Mode aktiv ("8000) machen
+{\catcode`\,=\active \gdef
+,{\obeyspaces\futurelet\next\CommaCheck}}
+\def\CommaCheck{\if\space\next\CommaPunct\else\CommaOrdinary\fi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PAGE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\parindent}{0em}
+\topmargin 0cm
+\oddsidemargin 0cm
+\evensidemargin 0cm
+
+\geometry{%
+  left=45.0mm,
+  right=15.0mm,
+  top=25mm,
+  bottom=25mm,
+  bindingoffset=0mm,
+  headheight=30pt,
+  includehead
+}
+
+\fancyheadoffset[L]{20mm}
+\renewcommand{\headrulewidth}{1pt}
+
+\pagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PDF SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hypersetup{
+    %pdftitle={\Fach{}: Übungsblatt \Uebungsblatt{}},
+    pdftitle={\Fach{}: Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}},
+    pdfauthor={\Name},
+    pdfborder={0 0 0}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% CODE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lstset{ %
+language=java,
+basicstyle=\footnotesize\tt,
+showtabs=false,
+tabsize=2,
+captionpos=b,
+breaklines=true,
+extendedchars=true,
+showstringspaces=false,
+flexiblecolumns=true,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}}
+\author{\Name{}}
+
+\begin{document}
+
+%\renewcommand{\theequation}{L\Kurseinheit{}.\AufgabeNummer{}.\arabic{equation}}
+\renewcommand{\theequation}{L \AufgabeNummer{}.\arabic{equation}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lhead{\sf \large \Fach{} \\ \small \Name{} - \Matrikelnummer{}}
+%\rhead{\sf \Semester{}}
+\rhead{\sf \FachKurz{} \quad E \Kurseinheit{}/\AufgabeNummer{}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% START HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Aufgabe{\AufgabeNummer{}}
+
+Es sind $\pmb{Q}_1 \pmb{R}_1 = \pmb{Q}_2 \pmb{R}_2 = \pmb{A}$ zwei $QR$-Zerlegungen der Matrix $\pmb{A} \in \mathbb{C}^{n,n}$. $\pmb{Q}_1$, $\pmb{Q}_2$ und $\pmb{R}_1$, $\pmb{R}_2$ sind unitär bzw. regulär, d. h., sie sind invertierbar. Daraus folgt:
+\begin{equation*}
+    \pmb{Q}_2^{-1}\pmb{Q}_1 = \pmb{R}_2 \pmb{R}_1^{-1} =: \pmb{S}.
+\end{equation*}
+Für $\pmb{S}$ lassen sich folgene Aussagen tätigen:
+\begin{align*}
+&\pmb{S} \textrm{ ist unitär,} \\
+&\pmb{S} \textrm{ ist eine obere Dreiecksmatrix.}
+\end{align*}
+Es ist aber auch
+\begin{equation*}
+    \pmb{Q}_1^{-1}\pmb{Q}_2 = \pmb{R}_1 \pmb{R}_2^{-1} = \underbrace{\ \pmb{S}^{-1} = \pmb{S}^H}_{S \textrm{ ist unitär!}}.
+\end{equation*}
+Somit ist $\pmb{S}$ sogar eine unitäre Diagonalmatrix. Es ist also $|s_i| = 1$ für alle $i = 1, \dots, n$.
+
+\end{document}

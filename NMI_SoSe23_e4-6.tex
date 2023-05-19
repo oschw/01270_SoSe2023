@@ -1,0 +1,209 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{fancyhdr}
+\usepackage[ngerman,german]{babel}
+\usepackage{german}
+\usepackage[utf8]{inputenc}
+\usepackage[active]{srcltx}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{struktex}
+\usepackage{hyperref}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{geometry}
+\usepackage{calc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% EDIT THIS PART %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Fach}{01270 Numerische Mathematik I}
+\newcommand{\FachKurz}{NMI}
+\newcommand{\Name}{Oliver Schwarz}
+\newcommand{\Matrikelnummer}{6883389}
+\newcommand{\Semester}{SoSe 23}
+\newcommand{\Kurseinheit}{4}
+\newcommand{\AufgabeNummer}{6}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DO NOT EDIT THIS PART %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Aufgabe}[1]{
+  {
+  \vspace*{0.5cm}
+  \textbf{Aufgabe #1}
+  \vspace*{0.2cm}
+  }
+}
+
+\newcommand{\cond}[0]{
+  {
+  \textrm{cond}
+  }
+}
+
+% Beschreibung
+% Unterscheidet im Mathe-Mode zwischen
+% "Dezimal-komma" und Satzzeichen.
+% Muss bei Eingabe durch kein/ein Leerzeichen
+% dahinter angegeben werden.
+% Literatur Richard Hirsch in: DTK, 1/1994, S. 42 ff.
+\mathchardef\CommaOrdinary="013B \mathchardef\CommaPunct="613B
+\mathcode`,="8000 % , im Math-Mode aktiv ("8000) machen
+{\catcode`\,=\active \gdef
+,{\obeyspaces\futurelet\next\CommaCheck}}
+\def\CommaCheck{\if\space\next\CommaPunct\else\CommaOrdinary\fi}
+
+\newcommand*\diff{\mathop{}\!\mathrm{\,d}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PAGE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\parindent}{0em}
+\topmargin 0cm
+\oddsidemargin 0cm
+\evensidemargin 0cm
+
+\geometry{%
+  left=45.0mm,
+  right=15.0mm,
+  top=25mm,
+  bottom=25mm,
+  bindingoffset=0mm,
+  headheight=30pt,
+  includehead
+}
+
+\fancyheadoffset[L]{20mm}
+\renewcommand{\headrulewidth}{1pt}
+
+\pagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PDF SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hypersetup{
+    %pdftitle={\Fach{}: Übungsblatt \Uebungsblatt{}},
+    pdftitle={\Fach{}: Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}},
+    pdfauthor={\Name},
+    pdfborder={0 0 0}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% CODE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lstset{ %
+language=java,
+basicstyle=\footnotesize\tt,
+showtabs=false,
+tabsize=2,
+captionpos=b,
+breaklines=true,
+extendedchars=true,
+showstringspaces=false,
+flexiblecolumns=true,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}}
+\author{\Name{}}
+
+\begin{document}
+
+%\renewcommand{\theequation}{L\Kurseinheit{}.\AufgabeNummer{}.\arabic{equation}}
+\renewcommand{\theequation}{L \AufgabeNummer{}.\arabic{equation}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lhead{\sf \large \Fach{} \\ \small \Name{} - \Matrikelnummer{}}
+%\rhead{\sf \Semester{}}
+\rhead{\sf \FachKurz{} \quad E \Kurseinheit{}/\AufgabeNummer{}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% START HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Aufgabe{\AufgabeNummer{}}
+
+Wir betrachten die \textsc{Tschebyscheff}-Polynome auf $\mathbb{R}$ für $x \in [-1, 1]$ nach Satz 5.2.3.
+
+Offensichtlich ist $\langle U_i, U_j \rangle_{\varrho_U} = 0$ für $|x| = 1$. Also beschränken wir uns mit $x \in (-1, 1)$ auf die Darstellung $$U_n(x) = \frac{\sin{((n+1) \arccos{x})}}{\sin{(\arccos{x})}}.$$
+
+Damit ist
+\begin{align*}
+    \langle U_i, U_j \rangle_{\varrho_U} &:= \int\limits_{-1}^{1} U_i(x)U_j(x)\sqrt{1-x^2} \diff x \\
+    &= \int\limits_{-1}^{1} \frac{\sin{((i+1) \arccos{x})}}{\sin{(\arccos{x})}} \cdot \frac{\sin{((j+1) \arccos{x})}}{\sin{(\arccos{x})}} \cdot \sqrt{1-x^2} \diff x %\\
+    %&= \int\limits_{-1}^{1} \frac{\sin{((i+1) \arccos{x})} \cdot \sin{((j+1) \arccos{x})}}{\sin^2{(\arccos{x})}} \sqrt{1-x^2} \diff x \\
+    %&= \int\limits_{-1}^{1} \frac{\sin{((i+1) \arccos{x})} \cdot \sin{((j+1) \arccos{x})}}{1-x^2} \sqrt{1-x^2} \diff x
+\end{align*}
+
+Wir substituieren im Integranden $u := \arccos{x}$ und $\diff u = - (\sqrt{1-x^2})^{-1} \diff x$.
+
+Da im Integranden $\sqrt{1-x^2} \diff x$ vorkommt und mit $\sin{(\arccos{x})} = \sqrt{1-x^2}$, lohnt sich die Umformung
+$$\sqrt{1-x^2} \diff x = -(\sqrt{1-x^2})^2 \diff u = - \sin^2{(\arccos{x})} \diff u = - \sin^2{u} \diff u.$$
+
+Wir passen die Integrationsgrenzen an und erhalten
+\begin{align}
+    \langle U_i, U_j \rangle_{\varrho_U} &= \int\limits_{\pi}^{0} \frac{\sin{(i+1)u} \cdot \sin{(j+1)u}}{\sin^2{u}} \cdot - \sin^2{u} \diff u \nonumber \\
+    &= - \int\limits_{\pi}^{0}\sin{(i+1)u} \cdot \sin{(j+1)u} \diff u  \label{eqn}
+\end{align}
+
+Für den Fall $i = j$ erhalten wir aus \ref{eqn}
+\begin{align*}
+    \langle U_i, U_i \rangle_{\varrho_U} &= - \int\limits_{\pi}^{0}\sin^2{(i+1)u}  \diff u
+\end{align*}
+
+Und mit der Substitution $t := (i+1)u$ sowie $\diff t = (i+1) \diff u$ ist
+\begin{align*}
+    \langle U_i, U_i \rangle_{\varrho_U} &= - \frac{1}{i+1} \int\limits_{\pi (i+1)}^{0}\sin^2{t}  \diff t \\
+    &= - \frac{1}{i+1} \left( \frac{t}{2} - \frac{1}{4} \sin(2t) \right) \Bigg |_{\pi (i + 1)}^{0} \\
+    &= \frac{1}{i+1} \left( \frac{\pi (i+1)}{2} - \frac{1}{4} \sin(2 \pi (i+1)) \right) \\
+    \langle U_i, U_i \rangle_{\varrho_U} &= \frac{\pi}{2}. \, &\Box
+\end{align*}
+
+Für den Fall $j \neq i$ ist \ref{eqn} mit $a := (i+1)u$ und $b := (j+1)u$ $$\sin(a) \sin(b) = \frac{1}{2}(\cos(a-b) - \cos(a+b)) \textrm{, also}$$ 
+\begin{align*}
+    \langle U_i, U_j \rangle_{\varrho_U} &= - \frac{1}{2} \int\limits_{\pi}^{0} \cos(iu - ju) - \cos(iu + ju + 2u) \diff u \\
+    &= \frac{1}{2} \int\limits_{\pi}^{0} \cos(iu + ju + 2u) \diff u - \frac{1}{2} \int\limits_{\pi}^{0} \cos(iu - ju) \diff u
+\end{align*}
+
+Die Substitution im ersten Integral $t := iu + ju + 2u$ und $\diff t = (i + j + 2) \diff u$ führt zu
+\begin{align*}
+    \langle U_i, U_j \rangle_{\varrho_U} &= \frac{1}{2} \int\limits_{\pi (i + j + 2)}^{0} \cos(t) (i + j + 2)^{-1} \diff t - \frac{1}{2} \int\limits_{\pi}^{0} \cos(iu - ju) \diff u \\
+    &= -\frac{\sin t}{2(i + j + 2)} \Bigg |_{\pi (i + j + 2)}^{0} - \frac{1}{2} \int\limits_{\pi}^{0} \cos(iu - ju) \diff u \\
+    &= -\frac{\sin \pi (i + j + 2)}{2(i + j + 2)} - \frac{1}{2} \int\limits_{\pi}^{0} \cos(iu - ju) \diff u
+\end{align*}
+
+Wir substituieren erneut im zweiten Integral $t := iu - ju$ und $\diff t = (i - j) \diff u$:
+\begin{align*}
+    \langle U_i, U_j \rangle_{\varrho_U} &= -\frac{\sin \pi (i + j + 2)}{2(i + j + 2)} - \frac{1}{2} \int\limits_{\pi (i - j)}^{0} \cos(t) (i-j)^{-1} \diff t \\
+    &= -\frac{\sin \pi (i + j + 2)}{2(i + j + 2)} - \frac{1}{2(i-j)} \int\limits_{\pi (i - j)}^{0} \cos(t) \diff t \\
+    &= -\frac{\sin \pi (i + j + 2)}{2(i + j + 2)} + \frac{\sin t}{2(i-j)} \Bigg |_{\pi (i - j)}^{0} \\
+    &= \frac{1}{2} \left( \frac{\sin \pi (i-j)}{(i-j)} -\frac{\sin \pi (i + j + 2)}{(i + j + 2)} \right) \textrm{, und da } i \neq j \\
+    \langle U_i, U_j \rangle_{\varrho_U} &= 0. \, &\Box
+\end{align*}
+
+Nach Voraussetzung ist $U_n(x) = U_n(-x)$ und für die Gewichtsfunktion $\varrho_U$ ist $\varrho_U(x) := \sqrt{1-x^2} = \sqrt{1-(-x)^2} = \varrho_U(-x)$. Folglich gilt
+\begin{align*}
+    \langle \mu_1 U_i, U_i \rangle_{\varrho_U} &= \int\limits_{-1}^1 x U_i(x) U_i(x) \varrho_U(x) \diff x \\
+    &= \int\limits_{0}^1 x U_i(x) U_i(x) \varrho_U(x) \diff x + \int\limits_{0}^1 -x \underbrace{U_i(-x) U_i(-x)}_{=U_i(x)U_i(x)} \underbrace{\varrho_U(-x)}_{= \varrho_U(x)} \diff x \\
+    &= \int\limits_{0}^1 x U_i(x) U_i(x) \varrho_U(x) \diff x - \int\limits_{0}^1 x U_i(x) U_i(x) \varrho_U(x) \diff x \\
+    \langle \mu_1 U_i, U_i \rangle_{\varrho_U} &= 0. \, &\Box
+\end{align*}
+
+\end{document}

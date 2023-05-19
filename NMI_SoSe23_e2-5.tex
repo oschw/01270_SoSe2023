@@ -1,0 +1,185 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{fancyhdr}
+\usepackage[ngerman,german]{babel}
+\usepackage{german}
+\usepackage[utf8]{inputenc}
+\usepackage[active]{srcltx}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{struktex}
+\usepackage{hyperref}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{geometry}
+\usepackage{calc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% EDIT THIS PART %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Fach}{01270 Numerische Mathematik I}
+\newcommand{\FachKurz}{NMI}
+\newcommand{\Name}{Oliver Schwarz}
+\newcommand{\Matrikelnummer}{6883389}
+\newcommand{\Semester}{SoSe 23}
+\newcommand{\Kurseinheit}{2}
+\newcommand{\AufgabeNummer}{5}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DO NOT EDIT THIS PART %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Aufgabe}[1]{
+  {
+  \vspace*{0.5cm}
+  \textbf{Aufgabe #1}
+  \vspace*{0.2cm}
+  }
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PAGE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\parindent}{0em}
+\topmargin 0cm
+\oddsidemargin 0cm
+\evensidemargin 0cm
+
+\geometry{%
+  left=45.0mm,
+  right=15.0mm,
+  top=25mm,
+  bottom=25mm,
+  bindingoffset=0mm,
+  headheight=30pt,
+  includehead
+}
+
+\fancyheadoffset[L]{20mm}
+\renewcommand{\headrulewidth}{1pt}
+
+\pagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PDF SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hypersetup{
+    %pdftitle={\Fach{}: Übungsblatt \Uebungsblatt{}},
+    pdftitle={\Fach{}: Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}},
+    pdfauthor={\Name},
+    pdfborder={0 0 0}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% CODE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lstset{ %
+language=java,
+basicstyle=\footnotesize\tt,
+showtabs=false,
+tabsize=2,
+captionpos=b,
+breaklines=true,
+extendedchars=true,
+showstringspaces=false,
+flexiblecolumns=true,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}}
+\author{\Name{}}
+
+\begin{document}
+
+%\renewcommand{\theequation}{L\Kurseinheit{}.\AufgabeNummer{}.\arabic{equation}}
+\renewcommand{\theequation}{L \AufgabeNummer{}.\arabic{equation}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lhead{\sf \large \Fach{} \\ \small \Name{} - \Matrikelnummer{}}
+%\rhead{\sf \Semester{}}
+\rhead{\sf \FachKurz{} \quad E \Kurseinheit{}/\AufgabeNummer{}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% START HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Aufgabe{\AufgabeNummer{}}
+
+Sei $C[0,1]$ der Raum der reellwertigen, stetigen Funktionen über $[0, 1]$.
+
+\begin{enumerate}[a)]
+    \item %a
+Nach Definition 2.1.1 muss eine Norm drei Voraussetzungen erfüllen: Sie ist positiv definit, absolut homogen und es gilt die Dreiecksungleichung $||\pmb{x} + \pmb{y}|| \leq ||\pmb{x}|| + ||\pmb{y}|| \; \forall \, \pmb{x}, \pmb{y} \in \mathbb{V}$.
+        \begin{enumerate}[1)]
+            \item 
+$||f||_{\infty} := \max\limits_{x \in [0,1]} |f(x)| \quad \forall \, f \in C[0,1]$
+\begin{align*}
+N_1: \qquad  &\; |f(x)| \geq 0 \, \Rightarrow \, \max\limits_{x \in [0,1]} |f(x)| \geq 0\\
+ \Longrightarrow &\; ||f||_{\infty} > 0 \quad \forall \, f \in C[0,1] \setminus 0 \; \mathrm{und} \\
+ &\; ||f||_{\infty} = 0 \; \Leftrightarrow \; f = 0 \\
+N_2: \qquad  &\; ||\alpha f||_{\infty} = \max\limits_{x \in [0,1]} |\alpha f(x)| = |\alpha| \max\limits_{x \in [0,1]} |f(x)| \\
+ \Longrightarrow &\; ||\alpha f||_{\infty} = |\alpha| \, ||f||_{\infty} \quad \forall \, f \in C[0,1], \, \alpha \in \mathbb{K} \\
+N_3: \qquad  &\; ||f + g||_{\infty} = \max\limits_{x \in [0,1]} |f(x) + g(x)| \\
+&\; \leq \max\limits_{x \in [0,1]} (|f(x)| + |g(x)|) = \max\limits_{x \in [0,1]} (|f(x)|) + \max\limits_{x \in [0,1]} (|g(x)|) \\
+ \Longrightarrow &\; ||f + g||_{\infty} \leq ||f||_{\infty} + ||g||_{\infty}  \quad \forall \, f, g \in C[0,1].
+\end{align*}
+
+            \item
+$||f||_{1} := \int_{0}^{1} |f(x)| \, dx \quad \forall \, f \in C[0,1]$
+
+Äquivalent zu Teilaufgabe 1 sind $N_1$ ((positive) Definitheit) und $N_2$ (absolute Homogenität) erfüllt. Weiterhin gilt:
+\begin{align*}
+N_3: \qquad  \; ||f + g||_{1} &= \int\limits_{0}^{1} |f(x) + g(x)| \, dx \leq \int\limits_{0}^{1} |f(x)| + |g(x)| \, dx \\
+&= \int\limits_{0}^{1} |f(x)| \, dx + \int\limits_{0}^{1} |g(x)| \, dx \\
+ \Longrightarrow \; ||f + g||_{1} &\leq ||f||_{1} + ||g||_{1}  \quad \forall \, f, g \in C[0,1].
+\end{align*}
+        \end{enumerate}
+
+    \item %b
+Laut Bemerkung 2.1.8 gilt der Normenäquivalenzsatz für $f \in C[0,1]$ i.Allg. nicht.
+
+Wir betrachten die Folge von Funktionen $(f_k)_{k \in \mathbb{N}}$ mit
+
+\begin{equation*}
+    f_k(x) :=\begin{cases}
+			\cos{k \pi x} & \textrm{für } x \in [0, \frac{1}{2k}],\\
+            0 & \textrm{für } x \in (\frac{1}{2k}, 1].
+		 \end{cases}
+\end{equation*}
+
+Alle Funktionen $(f_k)_{k \in \mathbb{N}}$ sind stetig im Intervall $[0,1]$ mit $f_k(x) = 1$ für $x = 0$ und $f_k(x) = 0$ für $x = (2k)^{-1}$. Also ist $(f_k)_{k \in \mathbb{N}} \in C[0,1]$ für alle $k \in \mathbb{N}$.
+
+Es ist
+\begin{equation*}
+    ||f_k||_1 = \int\limits_{0}^{1} |f_k(x)| \, dx = \int\limits_{0}^{\frac{1}{2k}} |\cos{k \pi x}| \, dx = \frac{\sin{k \pi x}}{k \pi} 
+    \Bigg|_{0}^{\frac{1}{2k}} = \frac{1}{k \pi}.
+\end{equation*}
+Also geht $||f_k||_1$ gegen $0$ für $k \rightarrow \infty$.
+
+Hingegen ist $||f_k||_{\infty} := \max\limits_{x \in [0,1]} |f_k(x)| = \cos{0} = 1$ für alle $k \in \mathbb{N}$.
+
+Also gibt es für die Konstanten $A, B > 0$, $A, B \in \mathbb{R}$ immer ein $\hat{k} \in \mathbb{N}$, ab dem die Ungleichung
+\begin{equation*}
+    A ||f_k||_{\infty} \leq ||f_k||_1 \leq B ||f_k||_{\infty}
+\end{equation*}
+nicht mehr erfüllt ist. Die Normen sind demnach nicht äquivalent.
+
+\end{enumerate}
+
+\end{document}

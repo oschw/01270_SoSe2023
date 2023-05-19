@@ -1,0 +1,170 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{fancyhdr}
+\usepackage[ngerman,german]{babel}
+\usepackage{german}
+\usepackage[utf8]{inputenc}
+\usepackage[active]{srcltx}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{struktex}
+\usepackage{hyperref}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{geometry}
+\usepackage{calc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% EDIT THIS PART %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Fach}{01270 Numerische Mathematik I}
+\newcommand{\FachKurz}{NMI}
+\newcommand{\Name}{Oliver Schwarz}
+\newcommand{\Matrikelnummer}{6883389}
+\newcommand{\Semester}{SoSe 23}
+\newcommand{\Kurseinheit}{2}
+\newcommand{\AufgabeNummer}{3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DO NOT EDIT THIS PART %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Aufgabe}[1]{
+  {
+  \vspace*{0.5cm}
+  \textbf{Aufgabe #1}
+  \vspace*{0.2cm}
+  }
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PAGE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\parindent}{0em}
+\topmargin 0cm
+\oddsidemargin 0cm
+\evensidemargin 0cm
+
+\geometry{%
+  left=45.0mm,
+  right=15.0mm,
+  top=25mm,
+  bottom=25mm,
+  bindingoffset=0mm,
+  headheight=30pt,
+  includehead
+}
+
+\fancyheadoffset[L]{20mm}
+\renewcommand{\headrulewidth}{1pt}
+
+\pagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PDF SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hypersetup{
+    %pdftitle={\Fach{}: Übungsblatt \Uebungsblatt{}},
+    pdftitle={\Fach{}: Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}},
+    pdfauthor={\Name},
+    pdfborder={0 0 0}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% CODE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lstset{ %
+language=java,
+basicstyle=\footnotesize\tt,
+showtabs=false,
+tabsize=2,
+captionpos=b,
+breaklines=true,
+extendedchars=true,
+showstringspaces=false,
+flexiblecolumns=true,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}}
+\author{\Name{}}
+
+\begin{document}
+
+%\renewcommand{\theequation}{L\Kurseinheit{}.\AufgabeNummer{}.\arabic{equation}}
+\renewcommand{\theequation}{L \AufgabeNummer{}.\arabic{equation}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lhead{\sf \large \Fach{} \\ \small \Name{} - \Matrikelnummer{}}
+%\rhead{\sf \Semester{}}
+\rhead{\sf \FachKurz{} \quad E \Kurseinheit{}/\AufgabeNummer{}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% START HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Aufgabe{\AufgabeNummer{}}
+
+\begin{enumerate}[a)]
+\item %a
+Wir betrachten für den Vektorraum $\mathbb{R}^n$ die Abschätzung
+\begin{equation*}
+    {||\pmb{x}||}_2 \leq {||\pmb{x}||}_1 \leq  \sqrt{n} \; {||\pmb{x}||}_2.
+\end{equation*}
+Für den linken Teil der Ungleichung erhalten wir (mit $\{|a|^2 + |b|^2\} \leq \{|a| + |b|\}^2$)
+\begin{align*}
+{||\pmb{x}||}_2^2 &= \sum\limits_{i=1}^{n} |x_i|^2 \leq \bigg(\sum\limits_{i=1}^{n} |x_i|\bigg)^2 = {||\pmb{x}||}_1^2 \\
+\Longrightarrow {||\pmb{x}||}_2 &\leq {||\pmb{x}||}_1
+\end{align*}
+Gleichheit erhalten wir für alle Vektoren $\pmb{x} \in \mathbb{R}^n$ mit einem $|x_j| \neq 0$ und allen anderen $|x_i| = 0$, $j \in [1, \dots , n], \, i \in [1, \dots, n] \setminus j$.
+
+
+%Mit der \textsc{Cauchy-Schwarzschen} Ungleichung $|\langle \pmb{x}, \pmb{y} \rangle| \leq ||\pmb{x}|| \ ||\pmb{y}||$ und dem Skalarprodukt $|\langle \pmb{x} , \pmb{1} \rangle| = \sum_{i=1}^{n} 1 \cdot |x_i|$
+Mit der \textsc{Cauchy-Schwarz}schen Ungleichung $|\langle \pmb{x}, \pmb{y} \rangle| \leq {\langle \pmb{x}, \pmb{x} \rangle}^{\frac{1}{2}} \ {\langle \pmb{y}, \pmb{y} \rangle}^{\frac{1}{2}}$ und dem Skalarprodukt $|\langle \pmb{x} , \pmb{1} \rangle| = \sum_{i=1}^{n} 1 \cdot |x_i|$ erhalten wir aus der rechten Seite der Ungleichung
+\begin{align*}
+    {||\pmb{x}||}_1 &= \sum\limits_{i=1}^{n} |x_i| = \sum\limits_{i=1}^{n} 1 \cdot |x_i| = |\langle \pmb{x} , \pmb{1} \rangle| \\
+    &\leq {\langle \pmb{x}, \pmb{x} \rangle}^{\frac{1}{2}} \ {\langle \pmb{1}, \pmb{1} \rangle}^{\frac{1}{2}} = \bigg( \sum\limits_{i=1}^{n} |x_i|^2 \bigg)^{\frac{1}{2}} \, \bigg( \sum\limits_{i=1}^{n} 1 \bigg)^{\frac{1}{2}} = {||\pmb{x}||}_2 \sqrt{n}
+\end{align*}
+Gleichheit besteht für alle Vektoren aus $\mathbb{R}^n$ mit $|x_1| = |x_2| = \cdots = |x_n|$.
+
+\item %b
+Wir betrachten für den Vektorraum $\mathbb{R}^n$ die Abschätzung
+\begin{equation*}
+    {||\pmb{x}||}_{\infty} \leq {||\pmb{x}||}_2 \leq  \sqrt{n} \; {||\pmb{x}||}_{\infty }.
+\end{equation*}
+Für die Maximumnorm gilt ${||\pmb{x}||}_{\infty} := \max\limits_{i = 1, \dots, n} |x_i|$. Also gibt es ein $k \in \{ 1, \dots , n \}$ mit $|x_k| = \max\limits_{i = 1, \dots, n} |x_i| = {||\pmb{x}||}_{\infty}$. Mit diesem $k$ folgt aus dem linken Teil der Abschätzung:
+\begin{equation*}
+    {||\pmb{x}||}_{\infty}^2 = |x_k|^2 \leq \sum\limits_{i=1}^{n} |x_i|^2 = {||\pmb{x}||}_{2}^2 \\
+    \quad \Longrightarrow \quad {||\pmb{x}||}_{\infty} \leq {||\pmb{x}||}_{2}
+\end{equation*}
+Gleichheit besteht für alle Vektoren aus $\mathbb{R}^n$, wenn $|x_i| = 0$ und $|x_k| > 0$ für alle $i \in \{ 1, \dots , n \}$, ein $k \in \{ 1, \dots , n \}$ und $i \neq k$.
+
+Mit der \textsc{Cauchy-Schwarz}schen Ungleichung und der Maximumnorm erhalten wir für die rechte Seite der Abschätzung:
+\begin{align*}
+    {||\pmb{x}||}_2^2 &= \sum\limits_{i=1}^{n} |x_i|^2 \leq \sum\limits_{i=1}^{n} ||\pmb{x}||_{\infty} |x_i| \\
+    &\leq \bigg( \sum\limits_{i=1}^{n} ||\pmb{x}||_{\infty}^2 \bigg)^{\frac{1}{2}} \, \bigg( \sum\limits_{i=1}^{n} |x_i|^2 \bigg)^{\frac{1}{2}} = \sqrt{n} \, ||\pmb{x}||_{\infty} \, ||\pmb{x}||_2 \\
+    &\Longrightarrow ||\pmb{x}||_2 \leq ||\pmb{x}||_{\infty}
+\end{align*}
+Gleichheit besteht für alle Vektoren aus $\mathbb{R}^n$ mit $|x_1| = |x_2| = \cdots = |x_n|$.
+
+\end{enumerate}
+
+
+
+\end{document}

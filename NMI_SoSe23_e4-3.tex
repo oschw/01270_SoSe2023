@@ -1,0 +1,256 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{fancyhdr}
+\usepackage[ngerman,german]{babel}
+\usepackage{german}
+\usepackage[utf8]{inputenc}
+\usepackage[active]{srcltx}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{struktex}
+\usepackage{hyperref}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{geometry}
+\usepackage{calc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% EDIT THIS PART %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Fach}{01270 Numerische Mathematik I}
+\newcommand{\FachKurz}{NMI}
+\newcommand{\Name}{Oliver Schwarz}
+\newcommand{\Matrikelnummer}{6883389}
+\newcommand{\Semester}{SoSe 23}
+\newcommand{\Kurseinheit}{4}
+\newcommand{\AufgabeNummer}{3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DO NOT EDIT THIS PART %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Aufgabe}[1]{
+  {
+  \vspace*{0.5cm}
+  \textbf{Aufgabe #1}
+  \vspace*{0.2cm}
+  }
+}
+
+\newcommand{\cond}[0]{
+  {
+  \textrm{cond}
+  }
+}
+
+% Beschreibung
+% Unterscheidet im Mathe-Mode zwischen
+% "Dezimal-komma" und Satzzeichen.
+% Muss bei Eingabe durch kein/ein Leerzeichen
+% dahinter angegeben werden.
+% Literatur Richard Hirsch in: DTK, 1/1994, S. 42 ff.
+\mathchardef\CommaOrdinary="013B \mathchardef\CommaPunct="613B
+\mathcode`,="8000 % , im Math-Mode aktiv ("8000) machen
+{\catcode`\,=\active \gdef
+,{\obeyspaces\futurelet\next\CommaCheck}}
+\def\CommaCheck{\if\space\next\CommaPunct\else\CommaOrdinary\fi}
+
+% For comparison, the existing overlap macros:
+% \def\llap#1{\hbox to 0pt{\hss#1}}
+% \def\rlap#1{\hbox to 0pt{#1\hss}}
+\def\clap#1{\hbox to 0pt{\hss#1\hss}}
+\def\mathllap{\mathpalette\mathllapinternal}
+\def\mathrlap{\mathpalette\mathrlapinternal}
+\def\mathclap{\mathpalette\mathclapinternal}
+\def\mathllapinternal#1#2{%
+\llap{$\mathsurround=0pt#1{#2}$}}
+\def\mathrlapinternal#1#2{%
+\rlap{$\mathsurround=0pt#1{#2}$}}
+\def\mathclapinternal#1#2{%
+\clap{$\mathsurround=0pt#1{#2}$}}
+
+\DeclareSymbolFont{matha}{OML}{txmi}{m}{it}% txfonts
+\DeclareMathSymbol{\varv}{\mathord}{matha}{118}
+\DeclareMathSymbol{\varw}{\mathord}{matha}{119}
+
+\newcommand*\wc{{}\cdot{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PAGE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\parindent}{0em}
+\topmargin 0cm
+\oddsidemargin 0cm
+\evensidemargin 0cm
+
+\geometry{%
+  left=45.0mm,
+  right=15.0mm,
+  top=25mm,
+  bottom=25mm,
+  bindingoffset=0mm,
+  headheight=30pt,
+  includehead
+}
+
+\fancyheadoffset[L]{20mm}
+\renewcommand{\headrulewidth}{1pt}
+
+\pagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PDF SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hypersetup{
+    %pdftitle={\Fach{}: Übungsblatt \Uebungsblatt{}},
+    pdftitle={\Fach{}: Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}},
+    pdfauthor={\Name},
+    pdfborder={0 0 0}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% CODE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lstset{ %
+language=java,
+basicstyle=\footnotesize\tt,
+showtabs=false,
+tabsize=2,
+captionpos=b,
+breaklines=true,
+extendedchars=true,
+showstringspaces=false,
+flexiblecolumns=true,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}}
+\author{\Name{}}
+
+\begin{document}
+
+%\renewcommand{\theequation}{L\Kurseinheit{}.\AufgabeNummer{}.\arabic{equation}}
+\renewcommand{\theequation}{L \AufgabeNummer{}.\arabic{equation}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lhead{\sf \large \Fach{} \\ \small \Name{} - \Matrikelnummer{}}
+%\rhead{\sf \Semester{}}
+\rhead{\sf \FachKurz{} \quad E \Kurseinheit{}/\AufgabeNummer{}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% START HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Aufgabe{\AufgabeNummer{}}
+
+Wir wenden das \textsc{Gram}-\textsc{Schmidt}-Verfahren an. Dabei nutzen wir die \textsc{Euklid}ische Norm $||{\cdot}||_2$.
+\begin{align*}
+\text{S1.} \quad &\\
+\mathrlap{\pmb{u}^1 := \displaystyle\frac{\pmb{a}^1}{\underbrace{||\pmb{a}^1||_2}_{=:r_{11}}} = 
+\begin{pmatrix}
+    \frac{i}{2}\\
+    \frac{1}{2}\\
+    0\\
+    -\frac{i}{2}\\
+    \frac{1}{2}
+\end{pmatrix}
+, \quad r_{11} = 4}\\
+\text{S2.} \quad & \\
+&i = 2: &&\\
+&&&\tilde{\pmb{u}}^2 := \pmb{a}^2 - \underbrace{\langle \pmb{a}^2, \pmb{u}^1 \rangle}_{=: r_{12}} \pmb{u}^1 =
+\begin{pmatrix}
+    1+i \\
+    0 \\
+    0 \\0 \\
+    i-1
+\end{pmatrix}, \quad
+\pmb{u}^2 := \displaystyle\frac{\tilde{\pmb{u}}^2}{\underbrace{||\tilde{\pmb{u}}^2||_2}_{=: r_{22}}} = 
+\begin{pmatrix}
+    \frac{1}{2} + \frac{i}{2}\\
+    0\\
+    0\\
+    0\\
+    -\frac{1}{2} + \frac{i}{2}
+\end{pmatrix}, \\
+&&&r_{12} = 2 + 2i, \quad
+r_{22} =  2.\\
+&i = 3: &&\\
+&&&\tilde{\pmb{u}}^3 := \pmb{a}^3 - \underbrace{\langle \pmb{a}^3, \pmb{u}^1 \rangle}_{=: r_{13}} \pmb{u}^1 -  \underbrace{\langle \pmb{a}^3, \pmb{u}^2 \rangle}_{=: r_{23}} \pmb{u}^2=
+\begin{pmatrix}
+    0 \\
+    3i \\
+    3+3i \\
+    -3 \\
+    0
+\end{pmatrix}, \quad \\
+&&&\pmb{u}^3 := \displaystyle\frac{\tilde{\pmb{u}}^3}{\underbrace{||\tilde{\pmb{u}}^3||_2}_{=: r_{33}}} = 
+\begin{pmatrix}
+    0\\
+    \frac{i}{2}\\
+    \frac{1}{2} + \frac{i}{2}\\
+    -\frac{1}{2}\\
+    0
+\end{pmatrix}, \quad
+r_{13} = 0, \quad
+r_{23} = 2i, \quad 
+r_{33} = 6.
+\end{align*}
+\textit{Ergebnis:}
+\begin{align*}
+\pmb{Q}_0 &= (\pmb{u}^1 \quad \pmb{u}^2 \quad \pmb{u}^3) = 
+\begin{pmatrix}
+    \frac{i}{2} &  \frac{1}{2} + \frac{i}{2} & 0                         \\
+    \frac{1}{2}  &  0   & \frac{i}{2}               \\
+    0  &  0   & \frac{1}{2} + \frac{i}{2} \\
+   -\frac{i}{2} &  0   & - \frac{1}{2}             \\
+    \frac{1}{2}  & -\frac{1}{2} + \frac{i}{2} & 0
+\end{pmatrix},\\
+\pmb{R} &= \pmb{R}_0 = 
+\begin{pmatrix}
+    4 & 2+2i & 0\\
+    0 & 2 & 2i\\
+    0 & 0 & 6
+\end{pmatrix} \left [ = \pmb{Q}^H_0 \pmb{A} \right ].
+\end{align*}
+Nun lösen wir $\pmb{R}_0 \pmb{x} = \tilde{\pmb{b}}_0 = \pmb{Q}^H_0 \pmb{b}$ (siehe Bemerkung 4.2.2):
+\begin{align*}
+&\begin{pmatrix}
+    4 & 2+2i & 0 \\
+    0 & 2 & 2i \\
+    0 & 0 & 6
+\end{pmatrix}
+\begin{pmatrix}
+    x_1 \\
+    x_2 \\
+    x_3
+\end{pmatrix}
+=
+\begin{pmatrix}
+    6i - 2 \\
+    2i - 2 \\
+    6
+\end{pmatrix} \quad \Longrightarrow \quad %x_3 = 1, x_2 = -1, x_1 = 2i. \\
+\pmb{x} = 
+\begin{pmatrix}
+    2i \\
+    -1 \\
+    1
+\end{pmatrix}.
+\end{align*}
+Das zugehörige (minimale) Residuum ist: $$||\pmb{Ax} - \pmb{b}||_2 = \left( ||\pmb{b}||_2^2 - ||\tilde{\pmb{b}}_0||_2^2 \right)^{\frac{1}{2}}=\sqrt{12}.$$
+\end{document}

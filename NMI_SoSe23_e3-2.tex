@@ -1,0 +1,176 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{fancyhdr}
+\usepackage[ngerman,german]{babel}
+\usepackage{german}
+\usepackage[utf8]{inputenc}
+\usepackage[active]{srcltx}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{struktex}
+\usepackage{hyperref}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{geometry}
+\usepackage{calc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% EDIT THIS PART %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Fach}{01270 Numerische Mathematik I}
+\newcommand{\FachKurz}{NMI}
+\newcommand{\Name}{Oliver Schwarz}
+\newcommand{\Matrikelnummer}{6883389}
+\newcommand{\Semester}{SoSe 23}
+\newcommand{\Kurseinheit}{3}
+\newcommand{\AufgabeNummer}{2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DO NOT EDIT THIS PART %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Aufgabe}[1]{
+  {
+  \vspace*{0.5cm}
+  \textbf{Aufgabe #1}
+  \vspace*{0.2cm}
+  }
+}
+
+\newcommand{\cond}[0]{
+  {
+  \textrm{cond}
+  }
+}
+
+% Beschreibung
+% Unterscheidet im Mathe-Mode zwischen
+% "Dezimal-komma" und Satzzeichen.
+% Muss bei Eingabe durch kein/ein Leerzeichen
+% dahinter angegeben werden.
+% Literatur Richard Hirsch in: DTK, 1/1994, S. 42 ff.
+\mathchardef\CommaOrdinary="013B \mathchardef\CommaPunct="613B
+\mathcode`,="8000 % , im Math-Mode aktiv ("8000) machen
+{\catcode`\,=\active \gdef
+,{\obeyspaces\futurelet\next\CommaCheck}}
+\def\CommaCheck{\if\space\next\CommaPunct\else\CommaOrdinary\fi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PAGE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\parindent}{0em}
+\topmargin 0cm
+\oddsidemargin 0cm
+\evensidemargin 0cm
+
+\geometry{%
+  left=45.0mm,
+  right=15.0mm,
+  top=25mm,
+  bottom=25mm,
+  bindingoffset=0mm,
+  headheight=30pt,
+  includehead
+}
+
+\fancyheadoffset[L]{20mm}
+\renewcommand{\headrulewidth}{1pt}
+
+\pagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PDF SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hypersetup{
+    %pdftitle={\Fach{}: Übungsblatt \Uebungsblatt{}},
+    pdftitle={\Fach{}: Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}},
+    pdfauthor={\Name},
+    pdfborder={0 0 0}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% CODE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lstset{ %
+language=java,
+basicstyle=\footnotesize\tt,
+showtabs=false,
+tabsize=2,
+captionpos=b,
+breaklines=true,
+extendedchars=true,
+showstringspaces=false,
+flexiblecolumns=true,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}}
+\author{\Name{}}
+
+\begin{document}
+
+%\renewcommand{\theequation}{L\Kurseinheit{}.\AufgabeNummer{}.\arabic{equation}}
+\renewcommand{\theequation}{L \AufgabeNummer{}.\arabic{equation}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lhead{\sf \large \Fach{} \\ \small \Name{} - \Matrikelnummer{}}
+%\rhead{\sf \Semester{}}
+\rhead{\sf \FachKurz{} \quad E \Kurseinheit{}/\AufgabeNummer{}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% START HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Aufgabe{\AufgabeNummer{}}
+
+Die Matrix $\pmb{A} \in \mathbb{C}^{n,n}$ ist invertierbar.
+
+\begin{enumerate}[(1)]
+    \item \label{aufgabe1}%(1)
+Es ist $$\cond\, \pmb{A} = ||\pmb{A}|| \, ||\pmb{A}^{-1}|| = \max\limits_{\pmb{x} \in \mathbb{C}^n: ||\pmb{x}|| = 1} ||\pmb{Ax}|| \, ||\pmb{A}^{-1}||.$$
+
+Es bleibt also zu zeigen, dass
+$$||\pmb{A}^{-1}|| = \frac{1}{\min\limits_{\pmb{x} \in \mathbb{C}^n: ||\pmb{x}|| = 1} ||\pmb{Ax}||}.$$
+
+
+Es ist
+\begin{align*}
+||\pmb{A}^{-1}|| &= \max\limits_{\pmb{x} \in \mathbb{C}^n \setminus \{\pmb{0}\}} \frac{||\pmb{A}^{-1} \pmb{x}||}{||\pmb{x}||} = \max\limits_{\pmb{Ay} \in \mathbb{C}^n \setminus \{\pmb{0}\}} \frac{||\pmb{y}||}{||\pmb{Ay}||} \\
+&= \max\limits_{\pmb{y} \in \mathbb{C}^n \setminus \{\pmb{0}\}} \bigg(\frac{||\pmb{Ay}||}{||\pmb{y}||}\bigg)^{-1} = \bigg(\min\limits_{\pmb{y} \in \mathbb{C}^n \setminus \{\pmb{0}\}} \frac{||\pmb{Ay}||}{||\pmb{y}||}\bigg)^{-1}.
+\end{align*}
+
+Mit der Bemerkung 2.4.9 und der Linearität von $\pmb{A}$ folgt
+$$||\pmb{A}^{-1}|| = \frac{1}{\min\limits_{\pmb{x} \in \mathbb{C}^n: ||\pmb{x}|| = 1} ||\pmb{Ax}||}.$$
+
+\item %(2)
+Die Matrix $\pmb{B} \in \mathbb{C}^{n,n}$ ist nicht invertierbar.
+
+Mit der Definition der Konditionszahl (siehe (\ref{aufgabe1})) erhalten wir aus der Behauptung
+$$\frac{||\pmb{A - B}||}{||\pmb{A}||} \geq \frac{1}{||\pmb{A}||\, ||\pmb{A}^{-1}||}.$$
+
+Wir multiplizieren auf beiden Seiten mit $\cond\, \pmb{A}$:
+$$||\pmb{A}^{-1}|| \, ||\pmb{A - B}|| \geq 1$$
+
+Ist die Matrixnorm $||\cdot||$ submultiplikativ, so ist dies äquivalent zu
+$$1 \leq ||\pmb{A}^{-1}(\pmb{A - B})|| = ||\pmb{I} - \pmb{A}^{-1} \pmb{B}|| \underbrace{= \sup\limits_{\pmb{x} \in \mathbb{C}^n \setminus \{\pmb{0}\}} \frac{||(\pmb{I} - \pmb{A}^{-1} \pmb{B}) \pmb{x}||}{||\pmb{x}||}}_{\textrm{Satz 2.4.6}}.$$
+
+Die Matrix $\pmb{B} \in \mathbb{C}^{n,n}$ ist nicht invertierbar. Es existiert also (mindestens) ein Vektor $\pmb{x} \in \mathbb{C}^n \setminus \{\pmb{0}\}$ mit $\pmb{B x} = \pmb{0}$. Daraus folgt
+$$\sup\limits_{\pmb{x} \in \mathbb{C}^n \setminus \{\pmb{0}\}} \frac{||(\pmb{I} - \pmb{A}^{-1} \pmb{B}) \pmb{x}||}{||\pmb{x}||} \geq \sup\limits_{\substack{\pmb{x} \in \mathbb{C}^n \setminus \{\pmb{0}\}\\ \pmb{Bx} = \pmb{0}}} \frac{||(\pmb{I} - \pmb{A}^{-1} \pmb{B}) \pmb{x}||}{||\pmb{x}||} = \sup\limits_{\substack{\pmb{x} \in \mathbb{C}^n \setminus \{\pmb{0}\}\\ \pmb{Bx} = \pmb{0}}} \frac{||\pmb{Ix}||}{||\pmb{x}||} = 1.$$
+\end{enumerate}
+\end{document}

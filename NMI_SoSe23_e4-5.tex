@@ -1,0 +1,171 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{fancyhdr}
+\usepackage[ngerman,german]{babel}
+\usepackage{german}
+\usepackage[utf8]{inputenc}
+\usepackage[active]{srcltx}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{struktex}
+\usepackage{hyperref}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{geometry}
+\usepackage{calc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% EDIT THIS PART %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Fach}{01270 Numerische Mathematik I}
+\newcommand{\FachKurz}{NMI}
+\newcommand{\Name}{Oliver Schwarz}
+\newcommand{\Matrikelnummer}{6883389}
+\newcommand{\Semester}{SoSe 23}
+\newcommand{\Kurseinheit}{4}
+\newcommand{\AufgabeNummer}{5}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DO NOT EDIT THIS PART %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Aufgabe}[1]{
+  {
+  \vspace*{0.5cm}
+  \textbf{Aufgabe #1}
+  \vspace*{0.2cm}
+  }
+}
+
+\newcommand{\cond}[0]{
+  {
+  \textrm{cond}
+  }
+}
+
+% Beschreibung
+% Unterscheidet im Mathe-Mode zwischen
+% "Dezimal-komma" und Satzzeichen.
+% Muss bei Eingabe durch kein/ein Leerzeichen
+% dahinter angegeben werden.
+% Literatur Richard Hirsch in: DTK, 1/1994, S. 42 ff.
+\mathchardef\CommaOrdinary="013B \mathchardef\CommaPunct="613B
+\mathcode`,="8000 % , im Math-Mode aktiv ("8000) machen
+{\catcode`\,=\active \gdef
+,{\obeyspaces\futurelet\next\CommaCheck}}
+\def\CommaCheck{\if\space\next\CommaPunct\else\CommaOrdinary\fi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PAGE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\parindent}{0em}
+\topmargin 0cm
+\oddsidemargin 0cm
+\evensidemargin 0cm
+
+\geometry{%
+  left=45.0mm,
+  right=15.0mm,
+  top=25mm,
+  bottom=25mm,
+  bindingoffset=0mm,
+  headheight=30pt,
+  includehead
+}
+
+\fancyheadoffset[L]{20mm}
+\renewcommand{\headrulewidth}{1pt}
+
+\pagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PDF SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hypersetup{
+    %pdftitle={\Fach{}: Übungsblatt \Uebungsblatt{}},
+    pdftitle={\Fach{}: Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}},
+    pdfauthor={\Name},
+    pdfborder={0 0 0}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% CODE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lstset{ %
+language=java,
+basicstyle=\footnotesize\tt,
+showtabs=false,
+tabsize=2,
+captionpos=b,
+breaklines=true,
+extendedchars=true,
+showstringspaces=false,
+flexiblecolumns=true,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}}
+\author{\Name{}}
+
+\begin{document}
+
+%\renewcommand{\theequation}{L\Kurseinheit{}.\AufgabeNummer{}.\arabic{equation}}
+\renewcommand{\theequation}{L \AufgabeNummer{}.\arabic{equation}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lhead{\sf \large \Fach{} \\ \small \Name{} - \Matrikelnummer{}}
+%\rhead{\sf \Semester{}}
+\rhead{\sf \FachKurz{} \quad E \Kurseinheit{}/\AufgabeNummer{}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% START HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Aufgabe{\AufgabeNummer{}}
+
+Wir betrachten die dreigliedrige Rekursion nach Definition 5.2.1:
+$$T_{n+1} = 2\mu_1T_n-T_{n-1}, \; n=1, 2, \dots, \; T_0 = \mu_0, \; T_1 = \mu_1.$$
+Für $$\tilde{T_n}(x) = \frac{(x+\sqrt{x^2-1})^n + (x-\sqrt{x^2-1})^n}{2}$$ ist
+$$\tilde{T_0}(x) = \frac{1 + 1}{2} = 1 = \mu_0, \; \tilde{T_1}(x) = \frac{x+x}{2} = x = \mu_1 \quad \textrm{und}$$
+\begin{align*}
+    \tilde{T}_{n+1}(x) + \tilde{T}_{n-1}(x) &= \Big((x+\sqrt{x^2-1})^{n+1} + (x-\sqrt{x^2-1})^{n+1} \\& \quad + (x+\sqrt{x^2-1})^{n-1} + (x-\sqrt{x^2-1})^{n-1}\Big) \frac{1}{2} \\
+    &= \Big((x+\sqrt{x^2-1})^2(x+\sqrt{x^2-1})^{n-1} \\& \quad + (x-\sqrt{x^2-1})^2(x-\sqrt{x^2-1})^{n-1} \\ & \quad + (x+\sqrt{x^2-1})^{n-1} + (x-\sqrt{x^2-1})^{n-1}\Big)\frac{1}{2}  \\
+    &= \Big(2x(x+\sqrt{x^2-1})(x+\sqrt{x^2-1})^{n-1} \\& \quad + 2x(x-\sqrt{x^2-1})(x-\sqrt{x^2-1})^{n-1} \Big)\frac{1}{2} \\
+    &= 2x \frac{(x+\sqrt{x^2-1})^{n} + (x-\sqrt{x^2-1})^{n}}{2} \\
+    &= 2\mu_1\tilde{T_n}(x)\textrm{, also} \\
+    \tilde{T}_{n+1}(x) &= 2\mu_1\tilde{T_n}(x)- \tilde{T}_{n-1}(x).
+\end{align*}
+Mit den selben Anfangswerten $\mu_0$ und $\mu_1$ genügen $T_n$ und $\tilde{T_n}$ der selben Rekursion: Sie sind identisch.
+
+\vspace{1em}
+
+Analog betrachten wir nun die Rekursion für die \textsc{Tschebyscheff}-Polynome zweiter Art nach Definition 5.2.1:
+$$U_{n+1} = 2 \mu_1 U_n - U_{n-1}, \; n=1, 2, \dots, \; U_0 = \mu_0, \; U_1 = 2\mu_1.$$
+Für $$\tilde{U_n}(x) = \frac{(x+\sqrt{x^2-1})^{n+1} + (x-\sqrt{x^2-1})^{n+1}}{2\sqrt{x^2-1}}$$ ist
+$$\tilde{U_0}(x) = 1 = \mu_0, \; \tilde{U_1}(x) = 2x = 2\mu_1 \quad \textrm{und}$$
+\begin{align*}
+    \tilde{U}_{n+1}(x) + \tilde{U}_{n-1}(x) &= \Big( (x+\sqrt{x^2-1})^{n+2} + (x-\sqrt{x^2-1})^{n+2} \\& \quad + (x+\sqrt{x^2-1})^{n} + (x-\sqrt{x^2-1})^{n} \Big) (2\sqrt{x^2-1})^{-1} \\
+    &= \Big((x+\sqrt{x^2-1})^2(x+\sqrt{x^2-1})^{n} \\& \quad + (x-\sqrt{x^2-1})^2(x-\sqrt{x^2-1})^{n} \\ & \quad + (x+\sqrt{x^2-1})^{n} + (x-\sqrt{x^2-1})^{n}\Big) (2\sqrt{x^2-1})^{-1} \\
+    &= \Big(2x(x+\sqrt{x^2-1})(x+\sqrt{x^2-1})^{n} \\& \quad + 2x(x-\sqrt{x^2-1})(x-\sqrt{x^2-1})^{n} \Big) (2\sqrt{x^2-1})^{-1} \\
+    &= 2x \frac{(x+\sqrt{x^2-1})^{n+1} + (x-\sqrt{x^2-1})^{n+1}}{2\sqrt{x^2-1}} \\
+    &= 2\mu_1\tilde{U_n}(x)\textrm{, also} \\
+    \tilde{U}_{n+1}(x) &= 2\mu_1\tilde{U_n}(x)- \tilde{U}_{n-1}(x).
+\end{align*}
+Mit den selben Anfangswerten $\mu_0$ und $\mu_1$ genügen $U_n$ und $\tilde{U_n}$ der selben Rekursion: Sie sind identisch.
+\end{document}

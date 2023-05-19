@@ -1,0 +1,213 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{fancyhdr}
+\usepackage[ngerman,german]{babel}
+\usepackage{german}
+\usepackage[utf8]{inputenc}
+\usepackage[active]{srcltx}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{struktex}
+\usepackage{hyperref}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{geometry}
+\usepackage{calc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% EDIT THIS PART %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Fach}{01270 Numerische Mathematik I}
+\newcommand{\FachKurz}{NMI}
+\newcommand{\Name}{Oliver Schwarz}
+\newcommand{\Matrikelnummer}{6883389}
+\newcommand{\Semester}{SoSe 23}
+\newcommand{\Kurseinheit}{4}
+\newcommand{\AufgabeNummer}{7}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DO NOT EDIT THIS PART %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Aufgabe}[1]{
+  {
+  \vspace*{0.5cm}
+  \textbf{Aufgabe #1}
+  \vspace*{0.2cm}
+  }
+}
+
+\newcommand{\cond}[0]{
+  {
+  \textrm{cond}
+  }
+}
+
+% Beschreibung
+% Unterscheidet im Mathe-Mode zwischen
+% "Dezimal-komma" und Satzzeichen.
+% Muss bei Eingabe durch kein/ein Leerzeichen
+% dahinter angegeben werden.
+% Literatur Richard Hirsch in: DTK, 1/1994, S. 42 ff.
+\mathchardef\CommaOrdinary="013B \mathchardef\CommaPunct="613B
+\mathcode`,="8000 % , im Math-Mode aktiv ("8000) machen
+{\catcode`\,=\active \gdef
+,{\obeyspaces\futurelet\next\CommaCheck}}
+\def\CommaCheck{\if\space\next\CommaPunct\else\CommaOrdinary\fi}
+
+\newcommand*\diff{\mathop{}\!\mathrm{\,d}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PAGE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\parindent}{0em}
+\topmargin 0cm
+\oddsidemargin 0cm
+\evensidemargin 0cm
+
+\geometry{%
+  left=45.0mm,
+  right=15.0mm,
+  top=25mm,
+  bottom=25mm,
+  bindingoffset=0mm,
+  headheight=30pt,
+  includehead
+}
+
+\fancyheadoffset[L]{20mm}
+\renewcommand{\headrulewidth}{1pt}
+
+\pagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PDF SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hypersetup{
+    %pdftitle={\Fach{}: Übungsblatt \Uebungsblatt{}},
+    pdftitle={\Fach{}: Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}},
+    pdfauthor={\Name},
+    pdfborder={0 0 0}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% CODE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lstset{ %
+language=java,
+basicstyle=\footnotesize\tt,
+showtabs=false,
+tabsize=2,
+captionpos=b,
+breaklines=true,
+extendedchars=true,
+showstringspaces=false,
+flexiblecolumns=true,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}}
+\author{\Name{}}
+
+\begin{document}
+
+%\renewcommand{\theequation}{L\Kurseinheit{}.\AufgabeNummer{}.\arabic{equation}}
+\renewcommand{\theequation}{L \AufgabeNummer{}.\arabic{equation}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lhead{\sf \large \Fach{} \\ \small \Name{} - \Matrikelnummer{}}
+%\rhead{\sf \Semester{}}
+\rhead{\sf \FachKurz{} \quad E \Kurseinheit{}/\AufgabeNummer{}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% START HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Aufgabe{\AufgabeNummer{}}
+\begin{enumerate}[a)]
+    \item %a
+Bilden die Ableitungen $k$-ter Ordnung der \textsc{Legendre}-Polynome $P_{i+k}$ ein System orthogonaler Polynome bezüglich der Gewichtsfunktion $\varrho_{k,k}(x)$, so ist (mit $i \neq j$)
+$$\big\langle P_{i+k}^{(k)}, P_{j+k}^{(k)} \big\rangle_{\varrho_{k,k}} = 0 = \int\limits_{-1}^{1} P_{i+k}^{(k)}(x) P_{j+k}^{(k)}(x) \varrho_{k,k}(x) \diff x.$$
+Die Gewichtsfunktion $\varrho_{k,k}(x) := (x^2 - 1)^k$ hat die Nullstellen $x = 1$ und $x = -1$ mit einer Vielfachheit von $k$ und ist selbst ein Polynom vom Grad $k \geq 0$. Das Polynom $P_{j+k}^{(k)}$ hat wiederum den Grad $j \geq 0$. Also ist das Hilfspolynom $$P_{j+k}^{(k)} \varrho_{k,k}(x) =: \psi(x)$$ ein Polynom vom Grad $(j+2k) \geq 0$ mit den Nullstellen $x = 1$ und $x = -1$ mit (mindestens) einer Vielfachheit von $k$.
+
+Wir integrieren $k-$-mal partiell und mit $\psi^{(k)}(1) = \psi^{(k)}(-1) = 0$
+\begin{align*}
+    \int\limits_{-1}^{1} P_{i+k}^{(k)}(x) P_{j+k}^{(k)}(x) \varrho_{k,k}(x) \diff x = (-1)^k \int\limits_{-1}^{1} P_{i+k}(x) \psi^{(k)}(x) \diff x = (-1)^k \big\langle P_{i+k}^{(k)}, \psi^{(k)} \big\rangle_{\varrho_*}
+\end{align*}
+
+Nun ist die Gewichtsfunktion $\varrho_* : (-1, 1) \rightarrow \mathbb{R}_+ : x \mapsto \varrho_*(x) = 1$. Laut Definition sind die \textsc{Legendre}-Polynome bezüglich dieser Gewichtsfunktion orthogonal:
+\begin{align*}
+    (-1)^k \big\langle P_{i+k}^{(k)}, \psi^{(k)} \big\rangle_{\varrho_*} = 0 = \big\langle P_{i+k}^{(k)}, P_{j+k}^{(k)} \big\rangle_{\varrho_{k,k}}.
+\end{align*}
+
+\item %b)
+Wir betrachten die (leicht veränderte) \textsc{Rodrigues}-Formel nach 5.23 $$P_{i+1}(x) = \frac{1}{2^{i+1} (i+1)!} \, \frac{\diff^{i+1}}{\diff x^{i+1}} \left( (x^2 - 1)^{i+1} \right)$$ und das Hilfspolynom $\psi_i(x) = 2^i i! P_i(x)$ $$\psi_{i+1}(x) = \frac{\diff^{i+1}}{\diff x^{i+1}} \left( (x^2 - 1)^{i+1} \right).$$
+
+\begin{align*}
+    \psi_{i+1}'(x) &= \frac{\diff^{i+2}}{\diff x^{i+2}} \left( (x^2 - 1)^{i+1} \right) \\ %\textrm{ und wegen } \frac{\diff}{\diff x}\left( (x^2 - 1)^n\right) = 2nx(x^2 - 1)^{n-1}\\
+    &=  2(i+1) \frac{\diff^{i}}{\diff x^{i}} \left( \frac{\diff}{\diff x}\left( x (x^2 - 1)^{i} \right)\right) \\
+    &=  2(i+1) \frac{\diff^{i}}{\diff x^{i}} \left( (x^2 - 1)^{i} + 2ix^2 (x^2 - 1)^{i-1} \right) \\
+    &=  2(i+1) \frac{\diff^{i}}{\diff x^{i}} \left( (x^2 - 1)^{i-1} ((x^2-1)+ 2ix^2) \right) \\
+    &=  2(i+1) \frac{\diff^{i}}{\diff x^{i}} \left( (x^2 - 1)^{i-1} (2ix^2 - 2i + x^2 - 1 + 2i) \right) \\
+    &=  2(i+1) \frac{\diff^{i}}{\diff x^{i}} \left( (x^2 - 1)^{i-1} ((2i+1)(x^2-1)+2i) \right) \\
+    &=  2(i+1) \frac{\diff^{i}}{\diff x^{i}} \left( (2i+1)(x^2 - 1)^{i} + 2i(x^2 - 1)^{i-1}\right) \\
+    &=  2(i+1) \left((2i+1) \frac{\diff^{i}}{\diff x^{i}} \left( (x^2 - 1)^{i}\right) + 2i \frac{\diff^{i}}{\diff x^{i}} \left((x^2 - 1)^{i-1}\right)\right) \\
+\psi_{i+1}'(x)  &=  2(i+1) \left((2i+1) \psi_{i}(x) + 2i \psi_{i-1}'(x)\right).
+\end{align*}
+
+Mit $\psi_i(x) = 2^i i! P_i(x)$ erhalten wir
+\begin{align*}
+2^{i+1} (i+1)! P'_{i+1}(x) &= 2(i+1) \left((2i+1) 2^i i! P_i(x) + 2i 2^{i-1} (i-1)! P'_{i-1}(x)\right) \\
+P'_{i+1}(x) &= \frac{1}{2^i i!} \left((2i+1) 2^i i! P_i(x) + 2^i i! P'_{i-1}(x)\right) \\
+P'_{i+1}(x) &= (2i+1) P_i(x) + P'_{i-1}(x).
+\end{align*}
+Durch Umstellung folgt 
+\begin{align}
+ (2i+1) P_i(x) &= P'_{i+1}(x) - P'_{i-1}(x).  \label{eqn7_1}
+ \end{align}
+
+\item %c)
+Mit der \textsc{Rodrigues}-Formel nach 5.23 ist
+$$P_i^{(k)}(x) = \displaystyle\frac{1}{2^i i!} \, \frac{\diff^{i+k}}{\diff^{i+k} x} \left( (x^2 - 1)^i\right),$$
+wobei $P_i^{(k)}(x) = 0$ für $k>i$ ist, oder
+$$\boxed{P_{k-1}^{(k)}(x) = 0.}$$
+
+Für $P_k^{(k)}$ gilt also $$P_k^{(k)}(x) = \displaystyle\frac{1}{2^k k!} \, \frac{\diff^{2k}}{\diff^{2k} x} \left( (x^2 - 1)^k\right) = \boxed{\frac{(2k)!}{2^k k!}.}$$
+
+Die dreigliedrige Rekursion nach 5.24 ist
+$$(i+1)P_{i+1} = (2i+1) \mu_1 P_i - i P_{i-1},\; i \in \mathbb{N}, \; P_1 = \mu_1, \; P_0 = \mu_0.$$
+
+Mit der Leibniz-Regel $(fg)^{(n)} = \sum_{k=0}^n \binom{n}{k}f^{(n)}g^{(n-k)}$ differenzieren wir $k$-mal:
+\begin{align}
+(i+1)P^{(k)}_{i+1} &= (2i+1) \sum\limits_{\nu = 0}^{k} \binom{k}{\nu}\mu^{(\nu)}_1 P^{(k-\nu)}_i - i P^{(k)}_{i-1} \quad &[\mu_1^{(\nu)} = 0 \textrm{ für } \nu > 1] \nonumber \\
+&= (2i+1) \left(\binom{k}{0}\mu_1 P^{(k)}_{i} + \binom{k}{1}P^{(k-1)}_{i} \right) - i P^{(k)}_{i-1} \nonumber \\
+(i+1)P^{(k)}_{i+1} &= (2i+1) \left(\mu_1 P^{(k)}_{i} + kP^{(k-1)}_{i} \right) - i P^{(k)}_{i-1}. \label{eqn7_2}
+\end{align}
+
+Aus \ref{eqn7_1} erhalten wir 
+\begin{align}
+(2i+1) P_i^{(k-1)}(x) &= P^{(k)}_{i+1}(x) - P^{(k)}_{i-1}(x) \label{eqn7_3}.   
+\end{align}
+
+Wir setzen \ref{eqn7_3} in \ref{eqn7_2} ein: $$(i+1)P^{(k)}_{i+1} = (2i+1) \mu_1 P^{(k)}_{i} + kP^{(k)}_{i+1}(x) - kP^{(k)}_{i-1}(x)  - i P^{(k)}_{i-1}.$$
+
+Daraus erhalten wir die Behauptung $$\boxed{(i+1 -1)P^{(k)}_{i+1} = (2i+1) \mu_1 P^{(k)}_{i} - (i+k)P^{(k)}_{i-1}(x).}$$
+\end{enumerate}
+
+
+\end{document}

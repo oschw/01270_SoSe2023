@@ -1,0 +1,147 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{fancyhdr}
+\usepackage[ngerman,german]{babel}
+\usepackage{german}
+\usepackage[utf8]{inputenc}
+\usepackage[active]{srcltx}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{struktex}
+\usepackage{hyperref}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{geometry}
+\usepackage{calc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% EDIT THIS PART %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Fach}{01270 Numerische Mathematik I}
+\newcommand{\FachKurz}{NMI}
+\newcommand{\Name}{Oliver Schwarz}
+\newcommand{\Matrikelnummer}{6883389}
+\newcommand{\Semester}{SoSe 23}
+\newcommand{\Kurseinheit}{2}
+\newcommand{\AufgabeNummer}{2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DO NOT EDIT THIS PART %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Aufgabe}[1]{
+  {
+  \vspace*{0.5cm}
+  \textbf{Aufgabe #1}
+  \vspace*{0.2cm}
+  }
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PAGE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\parindent}{0em}
+\topmargin 0cm
+\oddsidemargin 0cm
+\evensidemargin 0cm
+
+\geometry{%
+  left=45.0mm,
+  right=15.0mm,
+  top=25mm,
+  bottom=25mm,
+  bindingoffset=0mm,
+  headheight=30pt,
+  includehead
+}
+
+\fancyheadoffset[L]{20mm}
+\renewcommand{\headrulewidth}{1pt}
+
+\pagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PDF SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hypersetup{
+    %pdftitle={\Fach{}: Übungsblatt \Uebungsblatt{}},
+    pdftitle={\Fach{}: Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}},
+    pdfauthor={\Name},
+    pdfborder={0 0 0}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% CODE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lstset{ %
+language=java,
+basicstyle=\footnotesize\tt,
+showtabs=false,
+tabsize=2,
+captionpos=b,
+breaklines=true,
+extendedchars=true,
+showstringspaces=false,
+flexiblecolumns=true,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}}
+\author{\Name{}}
+
+\begin{document}
+
+%\renewcommand{\theequation}{L\Kurseinheit{}.\AufgabeNummer{}.\arabic{equation}}
+\renewcommand{\theequation}{L \AufgabeNummer{}.\arabic{equation}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lhead{\sf \large \Fach{} \\ \small \Name{} - \Matrikelnummer{}}
+%\rhead{\sf \Semester{}}
+\rhead{\sf \FachKurz{} \quad E \Kurseinheit{}/\AufgabeNummer{}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% START HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Aufgabe{\AufgabeNummer{}}
+
+\textit{Anmerkung:} Die auftretenden Integrale wurden mit wolframalpha.com berechnet (z.~B. \texttt{Integrate[x Sqrt[1-x$^2$],\{x,-1,1\}]} für das Integral $\int_{-1}^{1} x \sqrt{1 - x^2} \, dx$). \\
+
+
+Wir bestimmen eine Orthonormalbasis in $\mathrm{span}\{\mu_0, \mu_1, \mu_2, \mu_3\}$ mit Hilfe des \textsc{Gram-Schmidt}-Verfahrens (mit der Norm $||\tilde{u}_i|| = {\langle \tilde{u}_i, \tilde{u}_i \rangle}^{\frac{1}{2}}$):
+
+\begin{align*}
+    &u_0: &\quad u_0(x) &= \mu_0(x) = x^0 = 1 \\ \\
+    &u_1: &\quad \tilde{u}_1(x) &= \mu_1(x) - \langle \mu_1, u_0 \rangle u_0(x) = x - \underbrace{\frac{2}{\pi} \int\limits_{-1}^{1} x \sqrt{1- x^2} \, dx}_{=0} = x \\
+    &    &\quad  || \tilde{u}_1 ||^2 & = \frac{2}{\pi} \underbrace{\int\limits_{-1}^{1} x^2 \sqrt{1 - x^2} \, dx}_{= \pi/8} = \frac{2}{\pi} \frac{\pi}{8} = \frac{1}{4} \\
+    &  & \Longrightarrow u_1 &= 2x \\ \\
+    &u_2: &\quad \tilde{u}_2(x) &= \mu_2(x) - \langle \mu_2, u_0 \rangle u_0(x) - \langle \mu_2, u_1 \rangle u_1(x) \\
+    &  & &= x^2 - \frac{2}{\pi} \underbrace{\int\limits_{-1}^{1} x^2 \sqrt{1- x^2} \, dx}_{= \pi/8} - \frac{4x}{\pi} \underbrace{\int\limits_{-1}^{1}2 x^3 \sqrt{1 - x^2} \, dx}_{=0} = x^2 - \frac{1}{4}  \\
+    &    &\quad  || \tilde{u}_2 ||^2 & = \frac{2}{\pi} \underbrace{\int\limits_{-1}^{1} (x^2 - \frac{1}{4})^2 \sqrt{1 - x^2} \, dx}_{= \pi/32} = \frac{2}{\pi} \frac{\pi}{32} = \frac{1}{16}  \\
+    &  & \Longrightarrow u_2 &= 4x^2 - 1
+\end{align*}
+\begin{align*}
+    &u_3: &\quad \tilde{u}_3(x) &= \mu_3(x) - \langle \mu_3, u_0 \rangle u_0(x) - \langle \mu_3, u_1 \rangle u_1(x) - \langle \mu_3, u_2 \rangle u_2(x) \\
+    &  & &= x^3 - \frac{2}{\pi} \underbrace{\int\limits_{-1}^{1}x^3 \sqrt{1 - x^2} \, dx}_{=0} - \frac{4x}{\pi} \underbrace{\int\limits_{-1}^{1} 2x^4 \sqrt{1- x^2} \, dx}_{= \pi / 8} \\
+    &  & &\quad - \frac{2(4x^2 - 1)}{\pi} \underbrace{\int\limits_{-1}^{1}(4x^5 -x^3) \sqrt{1 - x^2} \, dx}_{=0} = x^3 - \frac{1}{2}x  \\
+    &    &\quad  || \tilde{u}_3 ||^2 & = \frac{2}{\pi} \underbrace{\int\limits_{-1}^{1} ((x^3 - \frac{1}{2}x)^2 \sqrt{1 - x^2} \, dx}_{= \pi/128} = \frac{2}{\pi} \frac{\pi}{128} = \frac{1}{64}  \\
+    &  & \Longrightarrow u_3 &= 8x^3 - 4x
+\end{align*}
+
+\end{document}

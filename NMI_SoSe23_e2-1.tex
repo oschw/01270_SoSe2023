@@ -1,0 +1,176 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{fancyhdr}
+\usepackage[ngerman,german]{babel}
+\usepackage{german}
+\usepackage[utf8]{inputenc}
+\usepackage[active]{srcltx}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{struktex}
+\usepackage{hyperref}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{geometry}
+\usepackage{calc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% EDIT THIS PART %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Fach}{01270 Numerische Mathematik I}
+\newcommand{\FachKurz}{NMI}
+\newcommand{\Name}{Oliver Schwarz}
+\newcommand{\Matrikelnummer}{6883389}
+\newcommand{\Semester}{SoSe 23}
+\newcommand{\Kurseinheit}{2}
+\newcommand{\AufgabeNummer}{1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DO NOT EDIT THIS PART %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Aufgabe}[1]{
+  {
+  \vspace*{0.5cm}
+  \textbf{Aufgabe #1}
+  \vspace*{0.2cm}
+  }
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PAGE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\parindent}{0em}
+\topmargin 0cm
+\oddsidemargin 0cm
+\evensidemargin 0cm
+
+\geometry{%
+  left=45.0mm,
+  right=15.0mm,
+  top=25mm,
+  bottom=25mm,
+  bindingoffset=0mm,
+  headheight=30pt,
+  includehead
+}
+
+\fancyheadoffset[L]{20mm}
+\renewcommand{\headrulewidth}{1pt}
+
+\pagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PDF SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hypersetup{
+    %pdftitle={\Fach{}: Übungsblatt \Uebungsblatt{}},
+    pdftitle={\Fach{}: Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}},
+    pdfauthor={\Name},
+    pdfborder={0 0 0}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% CODE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lstset{ %
+language=java,
+basicstyle=\footnotesize\tt,
+showtabs=false,
+tabsize=2,
+captionpos=b,
+breaklines=true,
+extendedchars=true,
+showstringspaces=false,
+flexiblecolumns=true,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}}
+\author{\Name{}}
+
+\begin{document}
+
+%\renewcommand{\theequation}{L\Kurseinheit{}.\AufgabeNummer{}.\arabic{equation}}
+\renewcommand{\theequation}{L \AufgabeNummer{}.\arabic{equation}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lhead{\sf \large \Fach{} \\ \small \Name{} - \Matrikelnummer{}}
+%\rhead{\sf \Semester{}}
+\rhead{\sf \FachKurz{} \quad E \Kurseinheit{}/\AufgabeNummer{}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% START HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Aufgabe{\AufgabeNummer{}}
+
+Wir betrachten das \textsc{Gram-Schmidt}-Verfahren und das modifizierte \textsc{Gram-Schmidt}-Verfahren. (Wir verwenden $\breve{\pmb{u}}^i$ statt $\tilde{\pmb{u}}^i$ im modifizierten \textsc{Gram-Schmidt}-Verfahren. Analog zum modifizierten Verfahren in 2.3.10 wurde im Algorithmus 2.3.8 die Summe durch eine Schleife ersetzt.)
+
+
+\textsc{Gram-Schmidt}-Verfahren:
+\begin{align*}
+\text{S1.} \quad & \pmb{u}^1 := \frac{\pmb{x}^1}{||\pmb{x}^1||} \\
+\text{S2.} \quad & \textsc{for} \quad i = 2, 3, \dots , k \quad \textsc{do} \\
+                  & \qquad \tilde{\pmb{u}}^{i,1} := \pmb{x}^i \\
+                  & \qquad \textsc{for} \quad j = 1, 2, \dots , i-1 \quad \textsc{do} \\
+                  & \qquad \qquad \tilde{\pmb{u}}^{i, j+1} := \tilde{\pmb{u}}^{i,j} - \langle \pmb{x}^i, \pmb{u}^j \rangle \pmb{u}^j \\
+                  & \qquad \textsc{end do} \\
+                  & \qquad \tilde{\pmb{u}}^i := \tilde{\pmb{u}}^{i,i} \\
+                  & \qquad \pmb{u}^i := \frac{\tilde{\pmb{u}}^i}{|| \tilde{\pmb{u}}^i ||} \\
+                  & \textsc{end do}
+\end{align*}
+
+
+Modifiziertes \textsc{Gram-Schmidt}-Verfahren:
+\begin{align*}
+\text{S1.} \quad & \pmb{u}^1 := \frac{\pmb{x}^1}{||\pmb{x}^1||} \\
+\text{S2.} \quad & \textsc{for} \quad i = 2, 3, \dots , k \quad \textsc{do} \\
+                  & \qquad \breve{\pmb{u}}^{i,1} := \pmb{x}^i \\
+                  & \qquad \textsc{for} \quad j = 1, 2, \dots , i-1 \quad \textsc{do} \\
+                  & \qquad \qquad \breve{\pmb{u}}^{i, j+1} := \breve{\pmb{u}}^{i,j} - \langle \pmb{u}^{i,j}, \pmb{u}^j \rangle \pmb{u}^j \\
+                  & \qquad \textsc{end do} \\
+                  & \qquad \breve{\pmb{u}}^i := \breve{\pmb{u}}^{i,i} \\
+                  & \qquad \pmb{u}^i := \frac{\breve{\pmb{u}}^i}{|| \breve{\pmb{u}}^i ||} \\
+                  & \textsc{end do}
+\end{align*}
+
+
+Die beiden Verfahren unterscheiden sich in der inneren Schleife:
+\begin{align}
+    \text{(\textsc{Gram-Schmidt}-Verfahren)} \quad \tilde{\pmb{u}}^{i, j+1} & := \tilde{\pmb{u}}^{i,j} - \langle \pmb{x}^i, \pmb{u}^j \rangle \pmb{u}^j \label{eq:formel1}\\
+    \text{(Modifiziertes \textsc{Gram-Schmidt}-Verfahren)} \quad \breve{\pmb{u}}^{i, j+1} & := \breve{\pmb{u}}^{i,j} - \langle \pmb{u}^{i,j}, \pmb{u}^j \rangle \pmb{u}^j \label{eq:formel2}
+\end{align}
+
+Wenn beide Verfahren dieselben orthonormalen Vektoren berechnen, muss $\tilde{\pmb{u}}^{i, j} = \breve{\pmb{u}}^{i, j}$ gelten.
+
+Die beiden Formeln \ref{eq:formel1} und \ref{eq:formel2} unterscheiden sich in ihren Linearfaktoren und genügen der Berechnungsvorschrift:
+\begin{equation}
+    \pmb{\tilde{u}}^{i,j} = \pmb{x}^i - \sum_{k=1}^{j-1} \lambda_k \pmb{u}^k \label{eq:formel3}
+\end{equation}
+
+Wir multiplizieren \ref{eq:formel3} mit $\pmb{u}^j$ und erhalten:
+\begin{equation*}
+    \langle \pmb{u}^{i,j}, \pmb{u}^j \rangle = \langle \pmb{x}^i, \pmb{u}^j \rangle - \sum_{k=1}^{j-1} \lambda_k\langle \pmb{u}^{k}, \pmb{u}^j \rangle = \langle \pmb{x}^i, \pmb{u}^j \rangle,
+\end{equation*}
+da $\pmb{u}^k \perp \pmb{u}^j$ für alle $k < j$ sind.
+
+Daraus folgt, dass mit $\pmb{x}^i = \tilde{\pmb{u}}^{i,1} = \breve{\pmb{u}}^{i,1}$ alle $\tilde{\pmb{u}}^{i,j} = \breve{\pmb{u}}^{i,j}$ sind und somit auch $\tilde{\pmb{u}}^{i} = \breve{\pmb{u}}^{i}$.
+
+\end{document}
