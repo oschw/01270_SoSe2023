@@ -1,0 +1,208 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{fancyhdr}
+\usepackage[ngerman,german]{babel}
+\usepackage{german}
+\usepackage[utf8]{inputenc}
+\usepackage[active]{srcltx}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{struktex}
+\usepackage{hyperref}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{geometry}
+\usepackage{calc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% EDIT THIS PART %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Fach}{01270 Numerische Mathematik I}
+\newcommand{\FachKurz}{NMI}
+\newcommand{\Name}{Oliver Schwarz}
+\newcommand{\Matrikelnummer}{6883389}
+\newcommand{\Semester}{SoSe 23}
+\newcommand{\Kurseinheit}{5}
+\newcommand{\AufgabeNummer}{4}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DO NOT EDIT THIS PART %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Aufgabe}[1]{
+  {
+  \vspace*{0.5cm}
+  \textbf{Aufgabe #1}
+  \vspace*{0.2cm}
+  }
+}
+
+\newcommand{\cond}[0]{
+  {
+  \textrm{cond}
+  }
+}
+
+% Beschreibung
+% Unterscheidet im Mathe-Mode zwischen
+% "Dezimal-komma" und Satzzeichen.
+% Muss bei Eingabe durch kein/ein Leerzeichen
+% dahinter angegeben werden.
+% Literatur Richard Hirsch in: DTK, 1/1994, S. 42 ff.
+\mathchardef\CommaOrdinary="013B \mathchardef\CommaPunct="613B
+\mathcode`,="8000 % , im Math-Mode aktiv ("8000) machen
+{\catcode`\,=\active \gdef
+,{\obeyspaces\futurelet\next\CommaCheck}}
+\def\CommaCheck{\if\space\next\CommaPunct\else\CommaOrdinary\fi}
+
+\newcommand*\diff{\mathop{}\!\mathrm{\,d}}
+
+\newcommand*\euler{\mathrm{e}}
+
+\newcommand\redarrow{%
+        \mathrel{\vcenter{\mathsurround0pt
+                \ialign{##\crcr
+                        \noalign{\nointerlineskip}$\searrow\vspace{2.5pt}$\crcr 
+                        \noalign{\nointerlineskip}$\rightarrow$\crcr
+                        \noalign{\nointerlineskip}$\vspace{12.5pt}$\crcr
+                }%
+        }}%
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PAGE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\parindent}{0em}
+\topmargin 0cm
+\oddsidemargin 0cm
+\evensidemargin 0cm
+
+\geometry{%
+  left=45.0mm,
+  right=15.0mm,
+  top=25mm,
+  bottom=25mm,
+  bindingoffset=0mm,
+  headheight=30pt,
+  includehead
+}
+
+\fancyheadoffset[L]{20mm}
+\renewcommand{\headrulewidth}{1pt}
+
+\pagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PDF SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hypersetup{
+    %pdftitle={\Fach{}: Übungsblatt \Uebungsblatt{}},
+    pdftitle={\Fach{}: Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}},
+    pdfauthor={\Name},
+    pdfborder={0 0 0}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% CODE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lstset{ %
+language=java,
+basicstyle=\footnotesize\tt,
+showtabs=false,
+tabsize=2,
+captionpos=b,
+breaklines=true,
+extendedchars=true,
+showstringspaces=false,
+flexiblecolumns=true,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}}
+\author{\Name{}}
+
+\begin{document}
+
+%\renewcommand{\theequation}{L\Kurseinheit{}.\AufgabeNummer{}.\arabic{equation}}
+\renewcommand{\theequation}{L \AufgabeNummer{}.\arabic{equation}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lhead{\sf \large \Fach{} \\ \small \Name{} - \Matrikelnummer{}}
+%\rhead{\sf \Semester{}}
+\rhead{\sf \FachKurz{} \quad E \Kurseinheit{}/\AufgabeNummer{}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% START HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Aufgabe{\AufgabeNummer{}}
+\begin{enumerate}[a)]
+    \item %a)
+Es ist
+$$\Delta_n^{\shortparallel} := \left\{x_k : x_k = \frac{k}{n}, \; k= 0, \dots, n \right\}$$
+eine Menge äquidistanter Stützstellen auf $[0, 1]$. $I_{\Delta_n^{\shortparallel}}f \in \Pi_n$ ist das mit den Stützstellen aus $\Delta_n^{\shortparallel}$ gebildete Interpolationspolynom zu $f$.
+
+Nach Satz 6.5.1 existiert zu jedem $x \in [0,1]$ ein $\xi = \xi(x) \in (0,1)$ mit
+\begin{equation}
+    f(x) - I\Delta_n^{\shortparallel}f(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}\omega_{n+1}(x), \label{eqn_4-1}
+\end{equation}
+und dem Knotenpolynom $$\omega_{n+1}(x) = (x - x_0)(x - x_1) \cdots (x - x_n) = \prod\limits_{k=0}^{n}\left(x-\frac{k}{n}\right).$$
+
+Äquivalent zum Beispiel 6.5.2 schätzen wir $|| \omega_{n+1} ||_{[0,1]}$ ab und nutzen dabei das Hilfspolynom 
+\begin{align*}
+    \psi(x) &:= \left(x-\frac{k}{n}\right) \left(x-\frac{n-k}{n}\right) \textrm{ mit} \\
+    ||\psi||_{[0,1]} &\leq \frac{1}{4} = 2^{-2}, \; x \in [0,1], \; 0 \leq k \leq n.
+\end{align*}
+
+Es ist $$\omega_{n+1}(x) = \prod\limits_{k=0}^{n}\left(x-\frac{k}{n}\right) = \prod\limits_{k=0}^{m}\left(x-\frac{k}{n}\right)\left(x-\frac{n-k}{n}\right) = \prod\limits_{k=0}^{m}\psi(x).$$
+
+Hiermit können wir $|| \omega_{n+1} ||_{[0,1]}$ abschätzen:
+$$|| \omega_{n+1} ||_{[0,1]} \leq 2^{-(n+1)}.$$
+
+Mit Satz 6.5.2 bzw. \ref{eqn_4-1} erhalten wir die Behauptung
+$$||f - I\Delta_n^{\shortparallel}f ||_{[0,1]} \leq \frac{||f^{(n+1)}||_{[0,1]}}{2^{(n+1)}(n+1)!}.$$
+
+\item %b)
+Es ist
+$$\Delta_n^{T} := \left\{x^*_k : k= 0, \dots, n \right\}$$
+eine Menge von Stützstellen auf $[0,1]$ und $I_{\Delta_n^{T}}f \in \Pi_n$ ist das mit den Stützstellen aus $\Delta_n^{T}$ gebildete Interpolationspolynom zu $f$.
+
+Analog zu \ref{eqn_4-1} existiert nach Satz 6.5.1 zu jedem $x \in [0,1]$ ein $\xi = \xi(x) \in (0,1)$ mit
+\begin{equation}
+    f(x) - I\Delta_n^{T}f(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}\omega_{n+1}(x), \label{eqn_4-2}
+\end{equation}
+und dem Knotenpolynom $$\omega_{n+1}(x) = (x - x^*_0)(x - x^*_1) \cdots (x - x^*_n) = \prod\limits_{k=0}^{n}(x-x^*_k).$$
+
+Um den Interpolationsfehler abschätzen zu können, müssen wir wiederum $||\omega_{n+1}||_{[0,1]}$ abschätzen.
+
+Wenn wir nun mit $\varphi : [-1, 1] \rightarrow [0,1] : x \mapsto \displaystyle\frac{1}{2} + \displaystyle\frac{1}{2} x$ die Nullstellen der \textsc{Tschebyscheff}-Polynome transformieren, erhalten wir
+\begin{align*}
+    \omega_{n+1}(x) &= \prod\limits_{k=0}^{n}\left(\frac{1}{2} + \frac{1}{2} x- \frac{1}{2} - \frac{1}{2} x^*_k\right) \\
+    &= \prod\limits_{k=0}^{n}\left(\frac{1}{2} (x- x_k)\right) = 2^{-(n+1)} \underbrace{\prod\limits_{k=0}^{n} (x- x_k)}_{= 2^{-n} T_{n+1}(x)} \\
+    \omega_{n+1}(x) &= 2^{-(2n+1)}  T_{n+1}(x).
+\end{align*}
+
+Mit Bemerkung 6.9.3 erhalten wir dann die Behauptung
+\begin{equation*}
+    ||f - I\Delta_n^{T}f ||_{[0,1]} \leq \frac{||f^{(n+1)}||_{[0,1]}}{2^{2n+1}(n+1)!}.
+\end{equation*}
+
+\end{enumerate}
+
+
+\end{document}

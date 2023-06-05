@@ -1,0 +1,194 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{fancyhdr}
+\usepackage[ngerman,german]{babel}
+\usepackage{german}
+\usepackage[utf8]{inputenc}
+\usepackage[active]{srcltx}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{struktex}
+\usepackage{hyperref}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{geometry}
+\usepackage{calc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% EDIT THIS PART %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Fach}{01270 Numerische Mathematik I}
+\newcommand{\FachKurz}{NMI}
+\newcommand{\Name}{Oliver Schwarz}
+\newcommand{\Matrikelnummer}{6883389}
+\newcommand{\Semester}{SoSe 23}
+\newcommand{\Kurseinheit}{5}
+\newcommand{\AufgabeNummer}{6}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DO NOT EDIT THIS PART %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Aufgabe}[1]{
+  {
+  \vspace*{0.5cm}
+  \textbf{Aufgabe #1}
+  \vspace*{0.2cm}
+  }
+}
+
+\newcommand{\cond}[0]{
+  {
+  \textrm{cond}
+  }
+}
+
+% Beschreibung
+% Unterscheidet im Mathe-Mode zwischen
+% "Dezimal-komma" und Satzzeichen.
+% Muss bei Eingabe durch kein/ein Leerzeichen
+% dahinter angegeben werden.
+% Literatur Richard Hirsch in: DTK, 1/1994, S. 42 ff.
+\mathchardef\CommaOrdinary="013B \mathchardef\CommaPunct="613B
+\mathcode`,="8000 % , im Math-Mode aktiv ("8000) machen
+{\catcode`\,=\active \gdef
+,{\obeyspaces\futurelet\next\CommaCheck}}
+\def\CommaCheck{\if\space\next\CommaPunct\else\CommaOrdinary\fi}
+
+\newcommand*\diff{\mathop{}\!\mathrm{\,d}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PAGE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\parindent}{0em}
+\topmargin 0cm
+\oddsidemargin 0cm
+\evensidemargin 0cm
+
+\geometry{%
+  left=45.0mm,
+  right=15.0mm,
+  top=25mm,
+  bottom=25mm,
+  bindingoffset=0mm,
+  headheight=30pt,
+  includehead
+}
+
+\fancyheadoffset[L]{20mm}
+\renewcommand{\headrulewidth}{1pt}
+
+\pagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% PDF SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hypersetup{
+    %pdftitle={\Fach{}: Übungsblatt \Uebungsblatt{}},
+    pdftitle={\Fach{}: Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}},
+    pdfauthor={\Name},
+    pdfborder={0 0 0}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% CODE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lstset{ %
+language=java,
+basicstyle=\footnotesize\tt,
+showtabs=false,
+tabsize=2,
+captionpos=b,
+breaklines=true,
+extendedchars=true,
+showstringspaces=false,
+flexiblecolumns=true,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Kurseinheit \Kurseinheit{} Aufgabe \AufgabeNummer{}}
+\author{\Name{}}
+
+\begin{document}
+
+%\renewcommand{\theequation}{L\Kurseinheit{}.\AufgabeNummer{}.\arabic{equation}}
+\renewcommand{\theequation}{L \AufgabeNummer{}.\arabic{equation}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lhead{\sf \large \Fach{} \\ \small \Name{} - \Matrikelnummer{}}
+%\rhead{\sf \Semester{}}
+\rhead{\sf \FachKurz{} \quad E \Kurseinheit{}/\AufgabeNummer{}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%% START HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Aufgabe{\AufgabeNummer{}}
+\begin{enumerate}[a)]
+    \item %a
+Sei $p := \phi \psi$, $p \in \Pi_{n,m}$, $\phi \in \Pi_n$ und $\psi \in \Pi_m$. Die \textsc{Lagrange}schen Grundpolynome zu den Stützstellen $(x_k, y_\ell)$ sind
+\begin{equation*}
+    \phi_k(x) := \prod\limits_{\substack{i=0 \\ i \neq k}}^{n} \frac{x - x_i}{x_k - x_i} \quad \textrm{und} \quad 
+    \psi_\ell(x) := \prod\limits_{\substack{j=0 \\ j \neq \ell}}^{m} \frac{y - y_j}{y_\ell - y_j}.
+\end{equation*}
+
+Nach 6.4 sind $\phi_k(x_i) = \delta_{ki}$ und $\psi_\ell(y_j) = \delta_{\ell j}$. Also ist
+\begin{equation}
+    p_{k\ell}(x_k, y_\ell) = z_{k\ell} = \left\{
+ \begin{aligned}
+	 &1 \quad \textrm{für } (k, \ell) = (i, j), \\
+  &0 \quad \textrm{für } (k, \ell) \neq (i, j).
+	\end{aligned}
+	\right. \label{eqn_1}
+\end{equation}
+
+Hiermit können wir analog zu 6.6 und mit \ref{eqn_1} setzen:
+\begin{equation}
+    p(x_k,y_\ell) = \sum\limits_{k=0}^{n}\sum\limits_{\ell=0}^{m} f_{k,\ell} p_{k\ell}(x_k,y_\ell) = f(x_k, y_\ell). \label{eqn_2}
+\end{equation}
+
+Folglich erfüllt $p(x_k,y_\ell)$ die Interpolationsbedingungen und die Interpolationsaufgabe ist lösbar.
+
+\item %b)
+
+Es ist für $k=0,\dots,n$ und $\ell=0,\dots,m$
+\begin{equation}
+    f(x_k,y_{\ell}) = \sum\limits_{i=0}^{n}\sum\limits_{j=0}^{m} a_{ij} x_k^i y_{\ell}^j. \label{eqn_3}
+\end{equation}
+
+Wir wenden Satz 5.1.8.(i) an für $n+1$ bzw. $m+1$ paarweise verschiedene Stützstellen.
+
+Für den Fall $(m+1)$ erhalten wir aus \ref{eqn_3}:
+\begin{align*}
+    f(x_k,y_{\ell}) =    
+    \sum\limits_{i=0}^{n}\underbrace{\left(\sum\limits_{j=0}^{m} a_{ij} y_{\ell}^j\right)}_{= \upsilon_{i\ell}} x_k^i = \sum\limits_{i=0}^{n}\upsilon_{i\ell} x_k^i.
+\end{align*}
+Gesucht ist für jedes feste $\ell$ mit $0 \leq \ell \leq m$ (also für jedes feste $y_{\ell}$) ein Polynom $\varphi_{\ell} \in \Pi_n$, das die Interpolationsbedingungen $$\varphi_{\ell}(x) = \sum\limits_{i=0}^{n}\upsilon_{i\ell} x^i \quad \textrm{und} \quad \varphi_{\ell}(x_k) = f(x_k,y_{\ell}), \quad k=0,1,\dots,n$$ erfüllt.
+
+Nach der vorangegangenen Teilaufgabe ist diese Interpolationsaufgabe lösbar und nach Satz 5.1.8.(i) sind die $\varphi_{\ell}$ eindeutig bestimmt.
+
+Für den Fall $(n+1)$ suchen wir nun für jedes $i$ mit $0 \leq i \leq n$ ein Polynom $\chi_i \in \Pi_m$, das die Interpolationsbedingungen
+$$\chi_i(y) = \sum\limits_{j=0}^{m} a_{ij} y^j \quad \textrm{und} \quad \chi_i(y_{\ell}) = \upsilon_{i\ell}, \quad \ell=0,1,\dots,m$$ erfüllt.
+
+Diese Interpolationsaufgabe ist lösbar und die $a_{ij}$ sind somit eindeutig bestimmt.
+
+Hieraus folgt, dass höchstens eine Lösung existiert.
+\end{enumerate}
+
+
+\end{document}
